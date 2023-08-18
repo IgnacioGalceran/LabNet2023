@@ -24,8 +24,7 @@ namespace Ejercicio1_Transportes
                         if (!int.TryParse(Console.ReadLine(), out cantPasajeros))
                         {
                             Console.WriteLine("Número de pasajeros invalido.");
-                        }
-                        if (cantPasajeros <= 0 | cantPasajeros >= 100)
+                        } else if (cantPasajeros <= 0 | cantPasajeros >= 100)
                         {
                             Console.WriteLine("El Número de pasajeros debe ser mayor a 0 y menor a 100");
                         }
@@ -40,8 +39,7 @@ namespace Ejercicio1_Transportes
                         if (!int.TryParse(Console.ReadLine(), out cantPasajeros))
                         {
                             Console.WriteLine("Número de pasajeros invalido.");
-                        }
-                        if (cantPasajeros <= 0 | cantPasajeros > 4)
+                        } else if (cantPasajeros <= 0 | cantPasajeros > 4)
                         {
                             Console.WriteLine("El Número de pasajeros para el taxi debe ser mayor a 0 y menor a 5");
                         }
