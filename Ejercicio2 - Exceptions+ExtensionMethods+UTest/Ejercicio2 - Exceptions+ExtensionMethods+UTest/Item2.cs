@@ -27,6 +27,10 @@ namespace Ejercicio2___Exceptions_ExtensionMethods_UTest
             {
                 Console.WriteLine("¡Seguro ingresó un caracter o no ingresó nada!");
             }
+            finally
+            {
+                Console.WriteLine("Finalizó el item 2");
+            }
         }
     }
 }

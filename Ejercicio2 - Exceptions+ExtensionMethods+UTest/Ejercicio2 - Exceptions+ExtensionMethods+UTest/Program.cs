@@ -25,19 +25,10 @@ namespace Ejercicio2___Exceptions_ExtensionMethods_UTest
             {
                 Console.WriteLine("Finalizó el item 1");
             }
-            Console.WriteLine("Item 2 de Excepciones");
-            try
-            {
-                Item2.ExceptionItem2();
-            }
-            catch
-            {
 
-            }
-            finally
-            {
-                Console.WriteLine("Finalizó el item 2");
-            }
+            Console.WriteLine("Item 2 de Excepciones");
+            Item2.ExceptionItem2();
+      
             try
             {
                 Console.WriteLine("Item 3 de Excepciones");
