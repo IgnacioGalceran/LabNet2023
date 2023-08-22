@@ -10,7 +10,11 @@ namespace Ejercicio2___Exceptions_ExtensionMethods_UTest
     {
         public static void ExcepcionItem3()
         {
-
+            throw new InvalidOperationException();
+        }
+        public static void ExceptionItem4()
+        {
+            throw new CustomException();
         }
     }
 }

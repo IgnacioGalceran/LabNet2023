@@ -38,6 +38,34 @@ namespace Ejercicio2___Exceptions_ExtensionMethods_UTest
             {
                 Console.WriteLine("Finalizó el item 2");
             }
+            try
+            {
+                Console.WriteLine("Item 3 de Excepciones");
+                Logic.ExcepcionItem3();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
+                Console.WriteLine($"Tipo de la excepción: {ex.GetType()}");
+            }
+            finally
+            {
+                Console.WriteLine("Finalizó el item 3");
+            }
+            try
+            {
+                Console.WriteLine("Item 4 de Excepciones");
+                Logic.ExceptionItem4();
+            }
+            catch (CustomException ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
+                Console.WriteLine($"Tipo de la excepción: {ex.GetType()}");
+            }
+            finally
+            {
+                Console.WriteLine("Finalizó el item 4");
+            }
             Console.ReadKey();
         }
     }
