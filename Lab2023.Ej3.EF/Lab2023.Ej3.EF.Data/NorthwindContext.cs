@@ -1,8 +1,5 @@
 using Lab2023.Ej3.EF.Entities;
-using System;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
-using System.Linq;
 
 namespace Lab2023.Ej3.EF.Data
 {
