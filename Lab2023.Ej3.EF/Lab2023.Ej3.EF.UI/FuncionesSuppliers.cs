@@ -1,5 +1,4 @@
-﻿using Lab2023.Ej3.EF.Logic;
-using System;
+﻿using System;
 
 namespace Lab2023.Ej3.EF.UI
 {

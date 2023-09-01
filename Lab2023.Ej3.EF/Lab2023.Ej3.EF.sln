@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lab2023.Ej3.EF.Data", "Lab2
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lab2023.Ej3.EF.Entities", "Lab2023.Ej3.EF.Entities\Lab2023.Ej3.EF.Entities.csproj", "{D3F03414-9B8A-485A-9DB2-A82EA292319D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lab2023.Ej3.UnitTest", "UnitTestEj3\Lab2023.Ej3.UnitTest.csproj", "{90BC3246-3EC7-4278-8063-01B70F539798}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{D3F03414-9B8A-485A-9DB2-A82EA292319D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D3F03414-9B8A-485A-9DB2-A82EA292319D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D3F03414-9B8A-485A-9DB2-A82EA292319D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{90BC3246-3EC7-4278-8063-01B70F539798}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{90BC3246-3EC7-4278-8063-01B70F539798}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{90BC3246-3EC7-4278-8063-01B70F539798}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{90BC3246-3EC7-4278-8063-01B70F539798}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

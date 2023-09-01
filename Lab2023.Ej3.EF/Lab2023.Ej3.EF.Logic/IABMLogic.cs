@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Lab2023.Ej3.EF.Entities;
+﻿using System.Collections.Generic;
 
 namespace Lab2023.Ej3.EF.Logic
 {

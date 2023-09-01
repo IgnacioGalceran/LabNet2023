@@ -1,10 +1,4 @@
-﻿using Lab2023.Ej3.EF.Entities;
-using Lab2023.Ej3.EF.Logic;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
 
 namespace Lab2023.Ej3.EF.UI
 {
