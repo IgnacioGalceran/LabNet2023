@@ -50,8 +50,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Ejercicios\Ej10.cs" />
+    <Compile Include="Ejercicios\Ej11.cs" />
+    <Compile Include="Ejercicios\Ej12.cs" />
+    <Compile Include="Ejercicios\Ej13.cs" />
+    <Compile Include="Ejercicios\Ej4.cs" />
+    <Compile Include="Ejercicios\Ej1.cs" />
+    <Compile Include="Ejercicios\Ej2.cs" />
+    <Compile Include="Ejercicios\Ej3.cs" />
+    <Compile Include="Ejercicios\Ej5.cs" />
+    <Compile Include="Ejercicios\Ej6.cs" />
+    <Compile Include="Ejercicios\Ej7.cs" />
+    <Compile Include="Ejercicios\Ej8.cs" />
+    <Compile Include="Ejercicios\Ej9.cs" />
     <Compile Include="Menu.cs" />
-    <Compile Include="Metodos.cs" />
     <Compile Include="Opciones.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
