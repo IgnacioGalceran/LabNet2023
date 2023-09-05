@@ -8,17 +8,23 @@ namespace Lab.Ejercicio4.Ejercicios
         public static void Resultado()
         {
             ProductsLogic productsLogic = new ProductsLogic();
-            var product = productsLogic.Ejercicio5();
 
-            if (product != null)
+            try
             {
+                var product = productsLogic.Ejercicio5();
                 Console.WriteLine($"Nombre producto: {product.ProductName} - " +
                     $"Precio por unidad: {product.UnitPrice} ");
             }
-            else
+            catch (Exception ex)
             {
-                Console.WriteLine("No existe ningun producto con estas caracteristicas en la base de datos");
+                Console.WriteLine($"{ex.Message}");
             }
+            finally
+            {
+                Console.WriteLine("Presiona una tecla para continuar...");
+            }
+
+            Console.ReadKey();
         }
     }
 }

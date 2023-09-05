@@ -45,8 +45,6 @@ namespace Lab.Ejercicio4.UI
                         Console.WriteLine("Opción 5 seleccionada. Query para devolver el primer elemento" +
                             " no nulo de una lista de productos donde el ID de producto sea igual a 789");
                         Ej5.Resultado();
-                        Console.WriteLine("Presiona una tecla para continuar...");
-                        Console.ReadKey();
                         break;
                     case 6:
                         Console.Clear();

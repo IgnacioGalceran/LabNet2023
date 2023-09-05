@@ -26,7 +26,7 @@ namespace Lab.Ejercicio4.Logic
         {
             int IDProducto = 789;
             Products productEj5 = context.Products
-                .FirstOrDefault(p => p.ProductID == IDProducto);
+                .First(p => p.ProductID == IDProducto);
 
             return productEj5;
         }
