@@ -42,6 +42,15 @@ form.addEventListener('submit', function (event) {
         pIntentos.innerHTML = `Te quedan: ${intentos} intentos`;
     } 
 
+    if (intentos === 0) {
+        objetivo.innerHTML = `El número a encontrar era el: ${random}`;
+        borrarHijos(intentoContainer);
+        pIntentos.innerHTML = "";
+        abrirModal("Te quedaste sin intentos 😑", false, 1000, intentos);
+        numero.value = "";
+        random = generarNumeroAleatorio(select.value);
+    }
+
     pHighscore.innerHTML = `Highscore ${select.value}: ${highscores[select.value]}`;
     score.innerHTML = `Score: ${intentos}`;
 });
@@ -62,7 +71,7 @@ function intento(datos) {
     let value = Number(datos.num);
     let max = obtenerMaximo();
     if (datos.tipo !== 'dificilisimo2') {
-        if (datos.intentos > 1) {
+        if (datos.intentos > 0) {
             if (value > max || value < 0) {
                 pista.innerHTML = `El valor debe ser mayor a 0 y menor a ${max}`;
                 pista.classList.add('pIncorrecto');
@@ -86,15 +95,7 @@ function intento(datos) {
                 return datos.intentos = 20;
             }
             return --datos.intentos;
-        } else {
-            objetivo.innerHTML = `El número a encontrar era el: ${random}`;
-            borrarHijos(intentoContainer);
-            pIntentos.innerHTML = "";
-            abrirModal("Te quedaste sin intentos 😑", false, 1000, datos.intentos);
-            numero.value = "";
-            random = generarNumeroAleatorio(select.value);
-            return datos.intentos = 20;
-        }
+        } 
     } else {
         if (value === sugerencia) {
             if (sugerencia > random) {
