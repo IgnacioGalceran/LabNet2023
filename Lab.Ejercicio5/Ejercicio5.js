@@ -137,14 +137,14 @@ function ayudaPC(datos) {
             sugerencia = Math.round((sugerenciaMax + sugerenciaMin) / 2);
             mostrarIntento(false, numIngresado, datos.intentos);
             pista.classList.add('pCorrecto');
-            pista.innerHTML = `Muy bajo, robá con: ${sugerencia}`;
+            pista.innerHTML = `Muy bajo, probá con: ${sugerencia}`;
         }  else {
             objetivo.innerHTML = `El número que encontraste fue el: ${numIngresado}`;
-            borrarHijos(intentoContainer);
-            random = generarNumeroAleatorio(select.value);
             abrirModal("Ganaste! 😎", true, 2000, datos.intentos);
-            sugerencia = 500000;
+            borrarHijos(intentoContainer);
             pista.innerHTML = `Probá con: ${sugerencia}`; 
+            random = generarNumeroAleatorio(select.value);
+            sugerencia = 500000;
             numero.value = sugerencia;
             sugerenciaMax = 1000000;
             sugerenciaMin = 0;
