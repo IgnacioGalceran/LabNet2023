@@ -1,18 +1,28 @@
 ﻿using Lab2023.Ej3.EF.Entities;
+using Lab2023.Ej3.EF.Logic.DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace Lab2023.Ej3.EF.Logic
 {
-    public class CustomersLogic : BaseLogic, IABMLogic<Customers, string>
+    public class CustomersLogic : BaseLogic, IABMLogic<CustomersDTO, string>
     {
-        public List<Customers> GetAll()
+        public List<CustomersDTO> GetAll()
         {
-            return context.Customers.ToList();
+            IEnumerable<Customers> customers = context.Customers.AsEnumerable();
+            List<CustomersDTO> result = customers.Select(x => new CustomersDTO
+            {
+                CustomerID = x.CustomerID,
+                ContactName = x.ContactName,
+                CompanyName = x.CompanyName,
+                City = x.City,
+            }).ToList();
+
+            return result;
         }
 
-        public void Add(Customers newCustomer)
+        public void Add(CustomersDTO newCustomer)
         {
             string customerId = GenerarID.Generador(newCustomer.CompanyName);
 
@@ -25,9 +35,15 @@ namespace Lab2023.Ej3.EF.Logic
                 customerId = uniqueId;
             }
 
-            newCustomer.CustomerID = customerId;
+            Customers customer = new Customers
+            {
+                CustomerID = customerId,
+                CompanyName = newCustomer.CompanyName,
+                ContactName = newCustomer.ContactName,
+                City = newCustomer.City,
+            };
 
-            context.Customers.Add(newCustomer);
+            context.Customers.Add(customer);
             context.SaveChanges();
         }
         public void Delete(string id)
@@ -36,7 +52,7 @@ namespace Lab2023.Ej3.EF.Logic
             context.Customers.Remove(clienteAEliminar);
             context.SaveChanges();
         }
-        public void Update(Customers updCustomer, string id)
+        public void Update(CustomersDTO updCustomer, string id)
         {
             var clienteAActualizar = context.Customers.FirstOrDefault(c => c.CustomerID == id) ?? throw new IdNoEncontrado();
             clienteAActualizar.CompanyName = updCustomer.CompanyName;
