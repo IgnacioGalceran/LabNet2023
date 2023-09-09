@@ -18,5 +18,14 @@ namespace Lab2023.Ej6.MVC.Controllers
 
             return View(customers);
         }
+
+        // DELETE: Customer
+        public ActionResult DeleteCustomer(string idCustomer)
+        {
+            CustomersLogic customer = new CustomersLogic();
+            bool result = customer.Delete(idCustomer);
+
+            return Json(new { result = result });
+        }
     }
 }

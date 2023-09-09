@@ -2,6 +2,7 @@
 using Lab2023.Ej3.EF.Logic.DTO;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 
 namespace Lab2023.Ej3.EF.Logic
@@ -17,7 +18,7 @@ namespace Lab2023.Ej3.EF.Logic
                 ContactName = x.ContactName,
                 CompanyName = x.CompanyName,
                 City = x.City,
-            }).ToList();
+            }).Take(10).ToList();
 
             return result;
         }
@@ -46,11 +47,27 @@ namespace Lab2023.Ej3.EF.Logic
             context.Customers.Add(customer);
             context.SaveChanges();
         }
-        public void Delete(string id)
+        public bool Delete(string customerId)
         {
-            var clienteAEliminar = context.Customers.FirstOrDefault(c => c.CustomerID == id) ?? throw new IdNoEncontrado();
-            context.Customers.Remove(clienteAEliminar);
-            context.SaveChanges();
+            bool result = false;
+            Customers clienteAEliminar = context.Customers.FirstOrDefault(c => c.CustomerID == customerId) ?? throw new IdNoEncontrado();
+
+            if (clienteAEliminar != null)
+            {
+                var ordersToDelete = context.Orders.Where(o => o.CustomerID == customerId).ToList();
+
+                foreach (var order in ordersToDelete)
+                {
+                    context.Order_Details.RemoveRange(context.Order_Details.Where(od => od.OrderID == order.OrderID));
+                }
+
+                context.Orders.RemoveRange(ordersToDelete);
+                context.Customers.Remove(clienteAEliminar);
+
+                result = context.SaveChanges() > 0;
+            }
+
+            return result;
         }
         public void Update(CustomersDTO updCustomer, string id)
         {

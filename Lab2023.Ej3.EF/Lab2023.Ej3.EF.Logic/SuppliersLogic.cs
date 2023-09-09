@@ -12,7 +12,7 @@ namespace Lab2023.Ej3.EF.UI
         {
             throw new NotImplementedException();
         }
-        public void Delete(string id)
+        public bool Delete(string id)
         {
             throw new NotImplementedException();
         }

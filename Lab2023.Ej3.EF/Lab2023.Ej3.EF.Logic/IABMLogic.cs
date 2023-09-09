@@ -6,7 +6,7 @@ namespace Lab2023.Ej3.EF.Logic
     {
         List<T> GetAll();
         void Add(T Objeto);
-        void Delete(H id);
+        bool Delete(H id);
         void Update(T Objeto, H id);
     }
 }
