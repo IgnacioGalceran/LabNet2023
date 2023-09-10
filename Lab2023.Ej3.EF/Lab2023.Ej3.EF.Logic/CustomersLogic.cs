@@ -12,21 +12,39 @@ namespace Lab2023.Ej3.EF.Logic
         public List<CustomersDTO> GetAll()
         {
             IEnumerable<Customers> customers = context.Customers.AsEnumerable();
-            List<CustomersDTO> result = customers.Select(x => new CustomersDTO
+            List<CustomersDTO> result = customers.Select(c => new CustomersDTO
             {
-                CustomerID = x.CustomerID,
-                ContactName = x.ContactName,
-                CompanyName = x.CompanyName,
-                City = x.City,
+                CustomerID = c.CustomerID,
+                ContactName = c.ContactName,
+                CompanyName = c.CompanyName,
+                City = c.City,
             }).Take(10).ToList();
 
             return result;
         }
+        public CustomersDTO GetById(string id)
+        {
+            Customers customer = context.Customers.FirstOrDefault(c => c.CustomerID == id);
 
-        public void Add(CustomersDTO newCustomer)
+            if (customer == null)
+            {
+                throw new IdNoEncontrado();
+            }
+
+            CustomersDTO customerDTO = new CustomersDTO
+            {
+                CustomerID = customer.CustomerID,
+                ContactName = customer.ContactName,
+                CompanyName = customer.CompanyName,
+                City = customer.City,
+            };
+
+            return customerDTO;
+        }
+        public bool Add(CustomersDTO newCustomer)
         {
             string customerId = GenerarID.Generador(newCustomer.CompanyName);
-
+            bool result = false; 
             int count = context.Customers.Count(c => c.CustomerID == customerId);
 
             if (count > 0)
@@ -45,7 +63,9 @@ namespace Lab2023.Ej3.EF.Logic
             };
 
             context.Customers.Add(customer);
-            context.SaveChanges();
+            result = context.SaveChanges() > 0;
+
+            return result;
         }
         public bool Delete(string customerId)
         {
@@ -69,13 +89,18 @@ namespace Lab2023.Ej3.EF.Logic
 
             return result;
         }
-        public void Update(CustomersDTO updCustomer, string id)
+        public bool Update(CustomersDTO updCustomer, string id)
         {
+            bool result = false;
             var clienteAActualizar = context.Customers.FirstOrDefault(c => c.CustomerID == id) ?? throw new IdNoEncontrado();
+
             clienteAActualizar.CompanyName = updCustomer.CompanyName;
             clienteAActualizar.ContactName = updCustomer.ContactName;
             clienteAActualizar.City = updCustomer.City;
-            context.SaveChanges();
+
+            result = context.SaveChanges() > 0;
+
+            return result;
         }
     }
 }

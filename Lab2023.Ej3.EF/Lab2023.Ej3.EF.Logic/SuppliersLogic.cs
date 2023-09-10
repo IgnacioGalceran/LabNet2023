@@ -8,7 +8,7 @@ namespace Lab2023.Ej3.EF.UI
 {
     public class SuppliersLogic : BaseLogic, IABMLogic<Suppliers, string>
     {
-        public void Add(Suppliers suppliers)
+        public bool Add(Suppliers suppliers)
         {
             throw new NotImplementedException();
         }
@@ -21,7 +21,7 @@ namespace Lab2023.Ej3.EF.UI
             return context.Suppliers.ToList();
         }
 
-        public void Update(Suppliers suppliers, string id)
+        public bool Update(Suppliers suppliers, string id)
         {
             throw new NotImplementedException();
         }

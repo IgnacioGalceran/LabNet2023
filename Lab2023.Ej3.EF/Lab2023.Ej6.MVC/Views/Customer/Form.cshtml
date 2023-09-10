@@ -1,0 +1,145 @@
+﻿@model Lab2023.Ej3.EF.Logic.DTO.CustomersDTO
+@{
+    ViewBag.Title = "Customer Page";
+}
+
+@{
+    string formTitle = Model.CustomerID != null ? "actualización" : "creación";
+}
+
+<h1>Formulario de @formTitle de Customers</h1>
+
+@if (string.IsNullOrEmpty(Model.CustomerID))
+{
+    using (Html.BeginForm("InsertCustomer", "Customer", FormMethod.Post, new { id = "insertForm" }))
+    {
+        <div class="form-group">
+            @Html.LabelFor(model => model.ContactName, new { @class = "control-label" })
+            @Html.TextBoxFor(model => model.ContactName, new { @class = "form-control customer-contact-name" })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.CompanyName, new { @class = "control-label" })
+            @Html.TextBoxFor(model => model.CompanyName, new { @class = "form-control customer-company-name" })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.City, new { @class = "control-label" })
+            @Html.TextBoxFor(model => model.City, new { @class = "form-control customer-city" })
+        </div>
+
+        <button type="button" class="btn mt-2 btn-primary" onclick="insertCustomer()">Agregar customer</button>
+    }
+
+}
+else
+{
+    using (Html.BeginForm("UpdateCustomer", "Customer", FormMethod.Post, new { id = "updateForm" }))
+    {
+        @Html.HiddenFor(model => model.CustomerID, new { @class = "customer-id" })
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ContactName, new { @class = "control-label" })
+            @Html.TextBoxFor(model => model.ContactName, new { @class = "form-control customer-contact-name" })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.CompanyName, new { @class = "control-label" })
+            @Html.TextBoxFor(model => model.CompanyName, new { @class = "form-control customer-company-name" })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.City, new { @class = "control-label" })
+            @Html.TextBoxFor(model => model.City, new { @class = "form-control customer-city" })
+        </div>
+
+        <button type="button" class="btn mt-2 btn-primary" onclick="updateCustomer()">Actualizar</button>
+    }
+}
+
+@section Scripts{
+    <script type="text/javascript" charset="utf-8">
+
+        function insertCustomer() {
+            Swal.fire({
+                title: 'Confirmar?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Si, agregar!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    confirmAction(false);
+                }
+            })
+        }
+
+        function updateCustomer() {
+            Swal.fire({
+                title: 'Confirmar?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Si, actualizar!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    confirmAction(true);
+                }
+            })    
+
+        function confirmAction(isUpdate) {
+            var contactName = $(".customer-contact-name").val();
+            var companyName = $(".customer-company-name").val();
+            var city = $(".customer-city").val();
+            var idCustomer = isUpdate ? $(".customer-id").val() : null;
+
+            var customerData = {
+                ContactName: contactName,
+                CompanyName: companyName,
+                City: city,
+                CustomerID: idCustomer
+            };
+
+            var url = isUpdate ? '@Url.Action("UpdateCustomer", "Customer")' : '@Url.Action("InsertCustomer", "Customer")';
+
+            $.ajax({
+                url: url,
+                type: 'POST',
+                data: JSON.stringify(customerData),
+                contentType: 'application/json',
+                success: function (data) {
+                    if (data.result) {
+                        var message = isUpdate ? 'actualizado' : 'agregado';
+                        Swal.fire(
+                            'Operación exitosa!',
+                            'El customer ha sido ' + message + '.',
+                            'success'
+                        );
+                    } else {
+                        var message = isUpdate ? 'actualizar' : 'agregar';
+                        Swal.fire(
+                            'Error!',
+                            'No se pudo ' + message + ' el customer.',
+                            'error'
+                        );
+                    }
+                },
+                error: function (xhr, textStatus, errorThrown) {
+                    Swal.fire(
+                        'Error!',
+                        textStatus,
+                        'error'
+                    );
+                }
+            });
+        }
+    }
+    </script>
+}
+
+
+
+
+

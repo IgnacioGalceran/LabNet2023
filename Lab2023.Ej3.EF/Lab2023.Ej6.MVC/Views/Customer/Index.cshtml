@@ -3,15 +3,16 @@
     ViewBag.Title = "Customer Page";
 }
 
-<h1>Customer Index</h1>
+<h1>Lista de Customers</h1>
 
 <table class="table">
     <thead>
         <tr>
-            <th scope="col">#</th>
-            <th scope="col">First</th>
-            <th scope="col">Last</th>
-            <th scope="col">Handle</th>
+            <th scope="col">ID</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Compañía</th>
+            <th scope="col">Ciudad</th>
+            <th scope="col">Opciones</th>
         </tr>
     </thead>
     <tbody>
@@ -22,12 +23,16 @@
                 <td>@customer.ContactName</td>
                 <td>@customer.CompanyName</td>
                 <td>@customer.City</td>
-                <td><button onclick="deleteCustomer('@Html.Raw(customer.CustomerID)')" class="btn btn-danger">Delete</button></td>
+                <td>
+                    <button onclick="deleteCustomer('@Html.Raw(customer.CustomerID)')" class="btn btn-danger">Borrar</button>
+                    <button class="btn btn-info" onclick="window.location.href='/Customer/Form/@Html.Raw(customer.CustomerID)'">Actualizar</button>
+                </td>
            </tr>
-        }
-        
+        }      
     </tbody>
 </table>
+
+<button class="btn btn-info" onclick="window.location.href='/Customer/Form'">+ Agregar Customers</button>
 
 @section Scripts{
     <script type="text/javascript" charset="utf-8">
@@ -46,6 +51,10 @@
                     confirmDelete(idCustomer);
                 }
             })
+        }
+
+        function updateCustomer(idCustomer) {
+            
         }
 
         function confirmDelete(idCustomer) {
