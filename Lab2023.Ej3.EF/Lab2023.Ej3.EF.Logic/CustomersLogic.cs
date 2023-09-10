@@ -2,7 +2,6 @@
 using Lab2023.Ej3.EF.Logic.DTO;
 using System;
 using System.Collections.Generic;
-using System.Data.Entity.Infrastructure;
 using System.Linq;
 
 namespace Lab2023.Ej3.EF.Logic

@@ -122,31 +122,33 @@
         }
 
         function confirmAction(isUpdate, customerData) {
-            console.log(customerData);
             var url = isUpdate ? '@Url.Action("UpdateCustomer", "Customer")' : '@Url.Action("InsertCustomer", "Customer")';
-
             $.ajax({
                 url: url,
                 type: 'POST',
                 data: JSON.stringify(customerData),
                 contentType: 'application/json',
                 success: function (data) {
-                    console.log(data);
                     if (data.result) {
                         var message = isUpdate ? 'actualizado' : 'agregado';
                         Swal.fire(
                             'Operación exitosa!',
                             'El cliente ha sido ' + message + '.',
                             'success'
-                        );
-                        setTimeout(function () {
-                            window.location.href = '/Customer'; 
-                        }, 2000);
-                    } else {
+                        ).then(() => {
+                            window.location.href = '/Customer';
+                        });
+                    } else if (!data.error) {
                         var message = isUpdate ? 'No hubo cambios en el cliente' : 'No se pudo agregar el cliente';
                         Swal.fire(
                             'Error!',
                             message,
+                            'error'
+                        );
+                    } else {
+                        Swal.fire(
+                            'Error!',
+                            data.message,
                             'error'
                         );
                     }
