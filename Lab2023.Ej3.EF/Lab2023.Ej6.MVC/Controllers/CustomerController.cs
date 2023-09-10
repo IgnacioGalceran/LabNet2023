@@ -21,11 +21,11 @@ namespace Lab2023.Ej6.MVC.Controllers
         }
         public ActionResult Form(string id)
         {
-            CustomersLogic logic = new CustomersLogic();
+            CustomersLogic customerLogic = new CustomersLogic();
 
             if (!string.IsNullOrEmpty(id))
             {
-                CustomersDTO customer = logic.GetById(id);
+                CustomersDTO customer = customerLogic.GetById(id);
 
                 if (customer == null)
                 {
@@ -44,7 +44,6 @@ namespace Lab2023.Ej6.MVC.Controllers
             CustomersLogic customerLogic = new CustomersLogic();
             CustomersDTO newCustomer = new CustomersDTO
             {
-                CustomerID = customer.CustomerID,
                 ContactName = customer.ContactName,
                 CompanyName = customer.CompanyName,
                 City = customer.City,

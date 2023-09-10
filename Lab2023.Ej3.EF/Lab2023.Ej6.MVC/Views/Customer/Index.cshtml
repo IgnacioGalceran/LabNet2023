@@ -3,39 +3,46 @@
     ViewBag.Title = "Customer Page";
 }
 
-<h1>Lista de Customers</h1>
+<div class="title-container">
+    <h1>Lista de Clientes</h1>
+    <button class="btn btn-dark" onclick="window.location.href='/Customer/Form'"><i class="fa-solid fa-plus"></i> Agregar Cliente</button>
+</div>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th scope="col">ID</th>
-            <th scope="col">Nombre</th>
-            <th scope="col">Compañía</th>
-            <th scope="col">Ciudad</th>
-            <th scope="col">Opciones</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var customer in Model)
-        {
+<div>
+    <input type="text" id="filter-name" class="filter" placeholder="Buscar por nombre">
+    <i class="fa-solid fa-magnifying-glass"></i>
+</div>
+
+<div class="table-container">
+    <table class="table">
+        <thead>
             <tr>
-                <th scope="row">@customer.CustomerID</th>
-                <td>@customer.ContactName</td>
-                <td>@customer.CompanyName</td>
-                <td>@customer.City</td>
-                <td>
-                    <button onclick="deleteCustomer('@Html.Raw(customer.CustomerID)')" class="btn btn-danger">Borrar</button>
-                    <button class="btn btn-info" onclick="window.location.href='/Customer/Form/@Html.Raw(customer.CustomerID)'">Actualizar</button>
-                </td>
-           </tr>
-        }      
-    </tbody>
-</table>
-
-<button class="btn btn-info" onclick="window.location.href='/Customer/Form'">+ Agregar Customers</button>
+                <th scope="col">Nombre</th>
+                <th scope="col">Compañía</th>
+                <th scope="col">Ciudad</th>
+                <th scope="col">Opciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var customer in Model)
+            {
+                <tr id="cliente_@customer.CustomerID">
+                    <td>@customer.ContactName</td>
+                    <td>@customer.CompanyName</td>
+                    <td>@customer.City</td>
+                    <td>
+                        <button onclick="deleteCustomer('@Html.Raw(customer.CustomerID)')" class="btn btn-outline-danger"><i class="fa-solid fa-trash"></i></button>
+                        <button class="btn btn-outline-info" onclick="window.location.href='/Customer/Form/@Html.Raw(customer.CustomerID)'"><i class="fa-solid fa-pen-to-square"></i></button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
 
 @section Scripts{
     <script type="text/javascript" charset="utf-8">
+
         function deleteCustomer(idCustomer) {
 
             Swal.fire({
@@ -53,10 +60,6 @@
             })
         }
 
-        function updateCustomer(idCustomer) {
-            
-        }
-
         function confirmDelete(idCustomer) {
             $.ajax({
                 url: '@Url.Action("DeleteCustomer", "Customer")',
@@ -69,23 +72,41 @@
                     if (data.result) {
                         Swal.fire(
                             'Borrado!',
-                            'El customer ha sido borrado.',
+                            'El Cliente ha sido borrado.',
                             'success'
                         );
+                        $('#cliente_' + idCustomer).remove();
                     } else {
                         Swal.fire(
                             'Error!',
-                            'No se pudo borrar el customer.',
+                            'No se pudo borrar el cliente.',
                             'error'
                         );
                     }
-                    console.log(data);
                 },
                 error: function (xhr, textStatus, errorThrown) {
-                    console.log(textStatus);
-                    console.log(errorThrown);
+                    Swal.fire(
+                        'Error!',
+                        textStatus,
+                        'error'
+                    );
                 }
             });
         }
+
+        $(document).ready(function () {
+            $('#filter-name').on('input', function () {
+                var filter = $(this).val().toLowerCase();
+
+                $('table tbody tr').each(function () {
+                    var name = $(this).find('td:first').text().toLowerCase();
+                    if (name.includes(filter)) {
+                        $(this).show();
+                    } else {
+                        $(this).hide();
+                    }
+                });
+            });
+        });
     </script>    
 }

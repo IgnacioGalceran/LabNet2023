@@ -7,60 +7,75 @@
     string formTitle = Model.CustomerID != null ? "actualización" : "creación";
 }
 
-<h1>Formulario de @formTitle de Customers</h1>
+<h1 class="form-title">Formulario de @formTitle de Clientes</h1>
 
-@if (string.IsNullOrEmpty(Model.CustomerID))
-{
-    using (Html.BeginForm("InsertCustomer", "Customer", FormMethod.Post, new { id = "insertForm" }))
+<div class="form-container">
+    @if (string.IsNullOrEmpty(Model.CustomerID))
     {
-        <div class="form-group">
-            @Html.LabelFor(model => model.ContactName, new { @class = "control-label" })
-            @Html.TextBoxFor(model => model.ContactName, new { @class = "form-control customer-contact-name" })
-        </div>
+        using (Html.BeginForm("InsertCustomer", "Customer", FormMethod.Post, new { id = "insertForm" }))
+        {
+            <div class="form-group">
+                @Html.LabelFor(model => model.ContactName, "Nombre del cliente", new { @class = "control-label" })
+                @Html.TextBoxFor(model => model.ContactName, new { @class = "form-control contact-name", placeholder = "Ingrese el nombre" })
+            </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.CompanyName, new { @class = "control-label" })
-            @Html.TextBoxFor(model => model.CompanyName, new { @class = "form-control customer-company-name" })
-        </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.CompanyName, "Nombre de Compañía", new { @class = "control-label" })
+                @Html.TextBoxFor(model => model.CompanyName, new { @class = "form-control company-name", placeholder = "Ingrese la compañía" })
+            </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.City, new { @class = "control-label" })
-            @Html.TextBoxFor(model => model.City, new { @class = "form-control customer-city" })
-        </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.City, "Ciudad del cliente", new { @class = "control-label" })
+                @Html.TextBoxFor(model => model.City, new { @class = "form-control customer-city", placeholder = "Ingrese la ciudad" })
+            </div>
 
-        <button type="button" class="btn mt-2 btn-primary" onclick="insertCustomer()">Agregar customer</button>
+            <button type="button" class="btn mt-2 btn-primary" onclick="insertCustomer()">Agregar</button>
+        }
     }
-
-}
-else
-{
-    using (Html.BeginForm("UpdateCustomer", "Customer", FormMethod.Post, new { id = "updateForm" }))
+    else
     {
-        @Html.HiddenFor(model => model.CustomerID, new { @class = "customer-id" })
+        using (Html.BeginForm("UpdateCustomer", "Customer", FormMethod.Post, new { id = "updateForm" }))
+        {
+            @Html.HiddenFor(model => model.CustomerID, new { @class = "customer-id" })
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.ContactName, new { @class = "control-label" })
-            @Html.TextBoxFor(model => model.ContactName, new { @class = "form-control customer-contact-name" })
-        </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.ContactName, "Nombre del cliente", new { @class = "control-label" })
+                @Html.TextBoxFor(model => model.ContactName, new { @class = "form-control contact-name", placeholder = "Ingrese el nombre" })
+            </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.CompanyName, new { @class = "control-label" })
-            @Html.TextBoxFor(model => model.CompanyName, new { @class = "form-control customer-company-name" })
-        </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.CompanyName, "Nombre de Compañía", new { @class = "control-label" })
+                @Html.TextBoxFor(model => model.CompanyName, new { @class = "form-control company-name", placeholder = "Ingrese la compañía" })
+            </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.City, new { @class = "control-label" })
-            @Html.TextBoxFor(model => model.City, new { @class = "form-control customer-city" })
-        </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.City, "Ciudad del cliente", new { @class = "control-label" })
+                @Html.TextBoxFor(model => model.City, new { @class = "form-control customer-city", placeholder = "Ingrese la ciudad" })
+            </div>
 
-        <button type="button" class="btn mt-2 btn-primary" onclick="updateCustomer()">Actualizar</button>
+            <button type="button" class="btn mt-2 btn-primary" onclick="updateCustomer()">Actualizar</button>
+        }
     }
-}
+</div>
 
 @section Scripts{
     <script type="text/javascript" charset="utf-8">
 
         function insertCustomer() {
+            var contactName = $(".contact-name").val();
+            var companyName = $(".company-name").val();
+            var city = $(".customer-city").val();
+
+            var customerData = {
+                ContactName: contactName,
+                CompanyName: companyName,
+                City: city
+            };
+
+            if (!validateFields(contactName, companyName, city)) {
+                return;
+            }
+
             Swal.fire({
                 title: 'Confirmar?',
                 icon: 'warning',
@@ -70,12 +85,28 @@ else
                 confirmButtonText: 'Si, agregar!'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    confirmAction(false);
+                    confirmAction(false, customerData);
                 }
-            })
+            });
         }
 
         function updateCustomer() {
+            var contactName = $(".contact-name").val();
+            var companyName = $(".company-name").val();
+            var city = $(".customer-city").val();
+            var idCustomer = $(".customer-id").val();
+
+            var customerData = {
+                ContactName: contactName,
+                CompanyName: companyName,
+                City: city,
+                CustomerID: idCustomer
+            };
+
+            if (!validateFields(contactName, companyName, city)) {
+                return;
+            }
+
             Swal.fire({
                 title: 'Confirmar?',
                 icon: 'warning',
@@ -85,23 +116,13 @@ else
                 confirmButtonText: 'Si, actualizar!'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    confirmAction(true);
+                    confirmAction(true, customerData);
                 }
-            })    
+            });
+        }
 
-        function confirmAction(isUpdate) {
-            var contactName = $(".customer-contact-name").val();
-            var companyName = $(".customer-company-name").val();
-            var city = $(".customer-city").val();
-            var idCustomer = isUpdate ? $(".customer-id").val() : null;
-
-            var customerData = {
-                ContactName: contactName,
-                CompanyName: companyName,
-                City: city,
-                CustomerID: idCustomer
-            };
-
+        function confirmAction(isUpdate, customerData) {
+            console.log(customerData);
             var url = isUpdate ? '@Url.Action("UpdateCustomer", "Customer")' : '@Url.Action("InsertCustomer", "Customer")';
 
             $.ajax({
@@ -110,18 +131,22 @@ else
                 data: JSON.stringify(customerData),
                 contentType: 'application/json',
                 success: function (data) {
+                    console.log(data);
                     if (data.result) {
                         var message = isUpdate ? 'actualizado' : 'agregado';
                         Swal.fire(
                             'Operación exitosa!',
-                            'El customer ha sido ' + message + '.',
+                            'El cliente ha sido ' + message + '.',
                             'success'
                         );
+                        setTimeout(function () {
+                            window.location.href = '/Customer'; 
+                        }, 2000);
                     } else {
-                        var message = isUpdate ? 'actualizar' : 'agregar';
+                        var message = isUpdate ? 'No hubo cambios en el cliente' : 'No se pudo agregar el cliente';
                         Swal.fire(
                             'Error!',
-                            'No se pudo ' + message + ' el customer.',
+                            message,
                             'error'
                         );
                     }
@@ -135,7 +160,27 @@ else
                 }
             });
         }
-    }
+
+        function validateFields(contactName, companyName, city) {
+ 
+            if (contactName.trim() === "" || !/^[a-zA-ZáéíóúÁÉÍÓÚñÑ.\s]{1,40}$/.test(contactName)) {
+                Swal.fire('Error', 'El nombre es obligatorio y debe contener como máximo 40 letras y espacios.', 'error');
+                return false;
+            }
+
+            if (companyName.trim() === "" || !/^[a-zA-ZáéíóúÁÉÍÓÚñÑ.\s]{1,30}$/.test(companyName)) {
+                Swal.fire('Error', 'El nombre de la compañía es obligatorio y debe como máximo 30 letras y espacios.', 'error');
+                return false;
+            }
+
+            if (city.trim() === "" || !/^[a-zA-ZáéíóúÁÉÍÓÚñÑ.\s]{1,15}$/.test(city)) {
+                Swal.fire('Error', 'La ciudad es obligatoria y debe contener como máximo 15 letras y espacios.', 'error');
+                return false;
+            }
+
+            return true;
+        }
+
     </script>
 }
 

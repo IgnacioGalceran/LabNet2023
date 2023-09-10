@@ -18,7 +18,7 @@ namespace Lab2023.Ej3.EF.Logic
                 ContactName = c.ContactName,
                 CompanyName = c.CompanyName,
                 City = c.City,
-            }).Take(10).ToList();
+            }).ToList();
 
             return result;
         }
@@ -67,14 +67,14 @@ namespace Lab2023.Ej3.EF.Logic
 
             return result;
         }
-        public bool Delete(string customerId)
+        public bool Delete(string id)
         {
             bool result = false;
-            Customers clienteAEliminar = context.Customers.FirstOrDefault(c => c.CustomerID == customerId) ?? throw new IdNoEncontrado();
+            Customers clienteAEliminar = context.Customers.FirstOrDefault(c => c.CustomerID == id) ?? throw new IdNoEncontrado();
 
             if (clienteAEliminar != null)
             {
-                var ordersToDelete = context.Orders.Where(o => o.CustomerID == customerId).ToList();
+                var ordersToDelete = context.Orders.Where(o => o.CustomerID == id).ToList();
 
                 foreach (var order in ordersToDelete)
                 {

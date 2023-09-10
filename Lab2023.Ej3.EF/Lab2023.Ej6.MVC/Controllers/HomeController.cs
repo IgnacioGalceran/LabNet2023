@@ -15,14 +15,14 @@ namespace Lab2023.Ej6.MVC.Controllers
 
         public ActionResult About()
         {
-            ViewBag.Message = "Your application description page.";
+            ViewBag.Message = "Ejercicio 6 - MVC con Razor";
 
             return View();
         }
 
         public ActionResult Contact()
         {
-            ViewBag.Message = "Your contact page.";
+            ViewBag.Message = "Contacto de Northwind.";
 
             return View();
         }
