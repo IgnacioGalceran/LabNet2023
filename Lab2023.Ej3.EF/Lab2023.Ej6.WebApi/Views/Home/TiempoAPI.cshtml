@@ -40,9 +40,10 @@
                         fetch(urlToday)
                             .then(response => response.json())
                             .then(weather => {
+                                console.log(weather)
                                 now.innerHTML = `
                                                 <div class="now">
-                                                    <h3>Tiempo actual en ${weather.location.name}</h3>
+                                                    <h4 class="location">Tiempo actual en ${weather.location.name}, ${weather.location.region}</h4>
                                                     <img src='${weather.current.condition.icon}'>
                                                     <p>Temperatura: ${weather.current.temp_c} °C</p>
                                                     <p>Humedad: ${weather.current.humidity} %</p>
@@ -72,10 +73,10 @@
                                     newDiv.classList.add('week-individual');
                                     week.appendChild(newDiv);
                                     newDiv.innerHTML = `
-                                                        <p>${dayName} ${dayNumber}</p>
+                                                        <p class="day-name">${dayName} ${dayNumber}</p>
                                                         <img src='${d.day.condition.icon}'>
-                                                        <p>Temperatura mínima: ${d.day.maxtemp_c} °C</p>
-                                                        <p>Temperatura Máxima: ${d.day.mintemp_c} °C</p>
+                                                        <p>Temperatura Máxima: ${d.day.maxtemp_c} °C</p>
+                                                        <p>Temperatura Mínima: ${d.day.mintemp_c} °C</p>
                                                         <p>Viento: ${d.day.maxwind_kph} km/h</p>
                                                     `;
                                    });
