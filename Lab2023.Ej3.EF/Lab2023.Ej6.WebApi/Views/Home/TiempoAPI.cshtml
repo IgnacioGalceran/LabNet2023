@@ -1,0 +1,109 @@
+﻿@{
+    ViewBag.Title = "Tiempo Page";
+}
+
+<section class="weather-section">
+    <h1 class="h1-weather">Tiempo en determinada Ciudad</h1>
+
+    <div class="weather-container">
+        <div class="search-container">
+            <label for="location">Ingrese la ciudad</label>
+            <input type="text" id="location" placeholder="Ingrese la ciudad" name="location" required>
+            <button type="button" class="btn btn-info" onclick="search()" id="button">Buscar</button>
+        </div>
+        <div id="now-container" class="now-container">
+        </div>
+        <div id="week" class="week">
+        </div>
+    </div>
+</section>
+
+@section Scripts{
+    <script type="text/javascript" charset="utf-8">
+        const API_KEY = 'b4f008b21480401b9dd124341231309';
+        function search() {
+            const urlNominatim = 'https://nominatim.openstreetmap.org/search';
+            const now = document.getElementById('now-container');
+            const location = document.getElementById('location').value;
+            const week = document.getElementById('week');
+            while (week.firstChild) {
+                week.removeChild(week.firstChild);
+            }
+            fetch(`${urlNominatim}?addressdetails=1&q=${location}&format=jsonv2&limit=1`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.length > 0) {
+                        const latitud = data[0].lat;
+                        const longitud = data[0].lon;
+                        const urlToday = `https://api.weatherapi.com/v1/current.json?key=${API_KEY}&q=${latitud},${longitud}`
+                        const urlWeek = `https://api.weatherapi.com/v1/forecast.json?key=${API_KEY}&q=${latitud},${longitud}&days=8`;
+                        fetch(urlToday)
+                            .then(response => response.json())
+                            .then(weather => {
+                                now.innerHTML = `
+                                                <div class="now">
+                                                    <h3>Tiempo actual en ${weather.location.name}</h3>
+                                                    <img src='${weather.current.condition.icon}'>
+                                                    <p>Temperatura: ${weather.current.temp_c} °C</p>
+                                                    <p>Humedad: ${weather.current.humidity} %</p>
+                                                    <p>Viento: ${weather.current.wind_kph} km/h</p>
+                                                    <p>Visibilidad: ${weather.current.vis_km} km</p>
+                                                </div>
+                                                `;
+                            })
+                            .catch(error => {
+                                Swal.fire(
+                                    'Error!',
+                                    'Error al obtener los datos del tiempo',
+                                    'error'
+                                );
+                            });
+
+                        fetch(urlWeek)
+                            .then(response => response.json())
+                            .then(weatherWeek => {
+                                const forecastDays = weatherWeek.forecast.forecastday.slice(1);
+
+                                forecastDays.forEach((d, index) => {
+                                    const date = new Date(d.date);
+                                    const dayName = date.toLocaleDateString("es-ES", { weekday: 'long', timeZone: 'America/Argentina/Buenos_Aires' });
+                                    const dayNumber = date.getDate();
+                                    const newDiv = document.createElement("div");
+                                    newDiv.classList.add('week-individual');
+                                    week.appendChild(newDiv);
+                                    newDiv.innerHTML = `
+                                                        <p>${dayName} ${dayNumber}</p>
+                                                        <img src='${d.day.condition.icon}'>
+                                                        <p>Temperatura mínima: ${d.day.maxtemp_c} °C</p>
+                                                        <p>Temperatura Máxima: ${d.day.mintemp_c} °C</p>
+                                                        <p>Viento: ${d.day.maxwind_kph} km/h</p>
+                                                    `;
+                                   });
+                            })
+                            .catch(error => {
+                                Swal.fire(
+                                    'Error!',
+                                    'Error al obtener los datos del tiempo',
+                                    'error'
+                                );
+                            }); 
+                    } else {
+                        Swal.fire(
+                            'Error!',
+                            'No se encontró la ubicación',
+                            'error'
+                        );
+                        const result = document.getElementById('result');
+                        result.innerHTML = '<p>No se encontró la ubicación.</p>';
+                    }
+                })
+                .catch(error => {
+                    Swal.fire(
+                        'Error!',
+                        'Error al obtener la ubicación',
+                        'error'
+                    );
+                });
+        }
+    </script>
+}

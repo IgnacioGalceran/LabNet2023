@@ -26,5 +26,11 @@ namespace Lab2023.Ej6.WebApi.Controllers
 
             return View();
         }
+        public ActionResult TiempoAPI()
+        {
+            ViewBag.Title = "Weather Page";
+
+            return View();
+        }
     }
 }

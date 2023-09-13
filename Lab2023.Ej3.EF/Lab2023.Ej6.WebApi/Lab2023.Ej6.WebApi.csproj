@@ -237,6 +237,7 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Customers.cshtml" />
     <Content Include="Views\Home\Form.cshtml" />
+    <Content Include="Views\Home\TiempoAPI.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
