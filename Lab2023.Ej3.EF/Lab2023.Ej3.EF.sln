@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lab2023.Ej3.UnitTest", "Uni
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lab2023.Ej6.MVC", "Lab2023.Ej6.MVC\Lab2023.Ej6.MVC.csproj", "{0F0AE515-D8CB-41AB-9882-EF04FB3F916F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lab2023.Ej6.WebApi", "Lab2023.Ej6.WebApi\Lab2023.Ej6.WebApi.csproj", "{CFA73E1D-7537-4A00-A679-EBED9CD092AD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,10 @@ Global
 		{0F0AE515-D8CB-41AB-9882-EF04FB3F916F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0F0AE515-D8CB-41AB-9882-EF04FB3F916F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0F0AE515-D8CB-41AB-9882-EF04FB3F916F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CFA73E1D-7537-4A00-A679-EBED9CD092AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CFA73E1D-7537-4A00-A679-EBED9CD092AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CFA73E1D-7537-4A00-A679-EBED9CD092AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CFA73E1D-7537-4A00-A679-EBED9CD092AD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

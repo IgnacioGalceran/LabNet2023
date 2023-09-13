@@ -1,0 +1,198 @@
+﻿@{
+    ViewBag.Title = "Customer Page";
+}
+
+<h1 class="form-title">Formulario de Clientes</h1>
+
+<div class="form-container">
+    <div class="form">
+        <div class="form-group">
+            <label for="contact-name" class="control-label">Nombre del cliente</label>
+            <input type="text" class="form-control contact-name" id="contact-name" placeholder="Ingrese el nombre">
+        </div>
+
+        <div class="form-group">
+            <label for="company-name" class="control-label">Nombre de Compañía</label>
+            <input type="text" class="form-control company-name" id="company-name" placeholder="Ingrese la compañía">
+        </div>
+
+        <div class="form-group">
+            <label for="customer-city" class="control-label">Ciudad del cliente</label>
+            <input type="text" class="form-control customer-city" id="customer-city" placeholder="Ingrese la ciudad">
+        </div>
+
+        <button type="button" class="btn mt-2 btn-primary" onclick="action()" id="submitButton">Agregar</button>
+    </div>
+</div>
+
+@section Scripts{
+    <script type="text/javascript" charset="utf-8">
+        const button = document.getElementById('submitButton');
+
+        function getCustomerData(customerId) {
+            $.ajax({
+                url: `https://localhost:44393/api/customer/${customerId}`,
+                method: 'GET',
+                dataType: "json",
+                success: function (data) {
+                    $(".contact-name").val(data.ContactName);
+                    $(".company-name").val(data.CompanyName);
+                    $(".customer-city").val(data.City);
+                },
+                error: function (xhr, textStatus, errorThrown) {
+                    Swal.fire(
+                        'Error!',
+                        textStatus,
+                        'error'
+                    );
+                }
+            });
+        }
+
+        function getId(name) {
+            const url = new URL(window.location.href);
+            return url.searchParams.get(name);
+        }
+
+        const customerId = getId('id');
+
+        if (customerId) {
+            button.textContent = 'Actualizar';
+            getCustomerData(customerId);
+        }
+
+        function insertCustomer() {
+            let contactName = $(".contact-name").val();
+            let companyName = $(".company-name").val();
+            let city = $(".customer-city").val();
+
+            const customerData = {
+                ContactName: contactName,
+                CompanyName: companyName,
+                City: city
+            };
+
+            if (!validateFields(contactName, companyName, city)) {
+                return;
+            }
+
+            Swal.fire({
+                title: 'Confirmar?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Si, agregar!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    confirmAction(false, customerData);
+                }
+            });
+        }
+
+        function updateCustomer(customerId) {
+            let contactName = $(".contact-name").val();
+            let companyName = $(".company-name").val();
+            let city = $(".customer-city").val();
+
+            const customerData = {
+                ContactName: contactName,
+                CompanyName: companyName,
+                City: city,
+                CustomerID: customerId
+            };
+
+            if (!validateFields(contactName, companyName, city)) {
+                return;
+            }
+
+            Swal.fire({
+                title: 'Confirmar?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Si, actualizar!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    confirmAction(true, customerData);
+                }
+            });
+        }
+
+        function confirmAction(isUpdate, customerData) {
+            let url = isUpdate ? `https://localhost:44393/api/customer/${customerData.CustomerID}` : `https://localhost:44393/api/customer`;
+            let type = isUpdate ? 'PUT' : 'POST';
+            $.ajax({
+                url: url,
+                type: type,
+                data: JSON.stringify(customerData),
+                contentType: 'application/json',
+                success: function (data, textStatus, xhr) {
+                    console.log(data, textStatus, xhr);
+                    if (xhr.status === 200) {
+                        let message = isUpdate ? 'actualizado' : 'agregado';
+                        Swal.fire(
+                            'Operación exitosa!',
+                            'El cliente ha sido ' + message + '.',
+                            'success'
+                        ).then(() => {
+                            window.location.href = '/Home/Customers';
+                        });
+                    } else if (xhr.status === 204) {
+                        let message = isUpdate ? 'No hubo cambios en el cliente' : 'No se pudo agregar el cliente';
+                        Swal.fire(
+                            'Sin cambios!',
+                            message,
+                            'info'
+                        );
+                    } else {
+                        Swal.fire(
+                            'Error!',
+                            xhr.statusText,
+                            'error'
+                        );
+                    }
+                },
+                error: function (xhr, textStatus, errorThrown) {
+                    Swal.fire(
+                        'Error!',
+                        textStatus,
+                        'error'
+                    );
+                }
+            });
+        }
+
+        function validateFields(contactName, companyName, city) {
+
+            if (contactName.trim() === "" || !/^[a-zA-ZáéíóúÁÉÍÓÚñÑ.\s-_]{1,40}$/.test(contactName)) {
+                Swal.fire('Error', 'El nombre es obligatorio y debe contener como máximo 40 letras y espacios.', 'error');
+                return false;
+            }
+
+            if (companyName.trim() === "" || !/^[a-zA-ZáéíóúÁÉÍÓÚñÑ.\s-_]{1,30}$/.test(companyName)) {
+                Swal.fire('Error', 'El nombre de la compañía es obligatorio y debe como máximo 30 letras y espacios.', 'error');
+                return false;
+            }
+
+            if (city.trim() === "" || !/^[a-zA-ZáéíóúÁÉÍÓÚñÑ.\s-_]{1,15}$/.test(city)) {
+                Swal.fire('Error', 'La ciudad es obligatoria y debe contener como máximo 15 letras y espacios.', 'error');
+                return false;
+            }
+
+            return true;
+        }
+
+        function action() {
+            const customerId = getId('id');
+
+            if (customerId) {
+                updateCustomer(customerId);
+            } else {
+                insertCustomer();
+            }
+        }
+
+    </script>
+}
