@@ -1,0 +1,71 @@
+@media only screen and (min-width: 300px) {
+    .sidebar {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        position: fixed;
+        left: 0;
+        top: 0;
+        height: 100vh;
+        width: 100px;
+        background-color: #13191c;
+    }
+
+    .hamburger {
+        color: #fff;
+        cursor: pointer;
+    }
+
+    .sidebar.active {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        position: fixed;
+        left: 0;
+        top: 0;
+        height: 100vh;
+        width: 40px;
+        background-color: #13191c;
+    }
+
+    ul {
+        padding: 5px;
+        list-style: none;
+    }
+
+    .sidebar.ulActive {
+        padding: 0;
+    }
+
+    li {
+        padding: 20px 0;
+        color: #fff;
+        cursor: pointer;
+    }
+
+    span:hover {
+        color: aquamarine;
+    }
+
+    a {
+        text-decoration: none;
+        color: inherit;
+      }
+}
+
+@media only screen and (min-width: 1000px) {
+    .sidebar {
+        width: 150px;
+    }
+
+    ul {
+        padding: 10px;
+        list-style: none;
+    }
+}
+
+@media only screen and (min-width: 1500px) {
+    .sidebar {
+        width: 200px;
+    }
+}
