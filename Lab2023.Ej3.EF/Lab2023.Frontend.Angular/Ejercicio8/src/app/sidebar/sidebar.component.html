@@ -1,33 +1,37 @@
-<aside [ngClass]="{'active': sidebarOpen}" class="sidebar">
+<aside [ngClass]="{'inactive': sidebarOpen}" class="sidebar">
     <nav>
-      <div [ngClass]="{'ulActive': sidebarOpen}">
-        <ul>
-          <span (click)="toggleSidebar()" class="material-icons hamburger">menu</span>
-          <li>
-            <a [routerLink]="['/home']">
-              <span *ngIf="sidebarOpen" class="material-icons">home</span>
-              <span *ngIf="!sidebarOpen">Home</span>
-            </a>
-          </li>
-          <li>
-            <a [routerLink]="['/dashboard']">
-              <span *ngIf="sidebarOpen" class="material-icons">help</span>
-              <span *ngIf="!sidebarOpen">Dashboard</span>
-            </a>
-          </li>
-          <li>
-            <a [routerLink]="['/contact']">
-              <span *ngIf="sidebarOpen" class="material-icons">contact_page</span>
-              <span *ngIf="!sidebarOpen">Contact</span>
-            </a>
-          </li>
-          <li>
-            <a [routerLink]="['/customers']">
-              <span *ngIf="sidebarOpen" class="material-icons">person_2</span>
-              <span *ngIf="!sidebarOpen">Customers</span>
-            </a>
-          </li>
-        </ul>
-      </div>
+      <ul>
+        <span (click)="toggleSidebar()" class="material-icons hamburger">menu</span>
+        <li>
+          <a [routerLink]="['/home']" [routerLinkActive]="'active'">
+            <span *ngIf="sidebarOpen" class="material-icons">home</span>
+            <span *ngIf="!sidebarOpen">Inicio</span>
+          </a>
+        </li>
+        <li>
+          <a [routerLink]="['/description']" [routerLinkActive]="'active'">
+            <span *ngIf="sidebarOpen" class="material-icons">help</span>
+            <span *ngIf="!sidebarOpen">Descripción</span>
+          </a>
+        </li>
+        <li>
+          <a [routerLink]="['/contact']" [routerLinkActive]="'active'">
+            <span *ngIf="sidebarOpen" class="material-icons">contact_page</span>
+            <span *ngIf="!sidebarOpen">Contacto</span>
+          </a>
+        </li>
+        <li>
+          <a [routerLink]="['/customers']" [routerLinkActive]="'active'">
+            <span *ngIf="sidebarOpen" class="material-icons">person_2</span>
+            <span *ngIf="!sidebarOpen">Clientes</span>
+          </a>
+        </li>
+        <li>
+          <a [routerLink]="['/weather']" [routerLinkActive]="'active'">
+            <span *ngIf="sidebarOpen" class="material-icons">sunny</span>
+            <span *ngIf="!sidebarOpen">API Clima</span>
+          </a>
+        </li>
+      </ul>
     </nav>
   </aside>

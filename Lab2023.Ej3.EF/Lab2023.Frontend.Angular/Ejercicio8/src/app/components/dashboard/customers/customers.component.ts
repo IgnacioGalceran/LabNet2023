@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { HttpClient } from '@angular/common/http';
 import { Customer } from './customers.interface';
 
@@ -12,22 +13,32 @@ import { Customer } from './customers.interface';
 export class CustomersComponent implements OnInit {
   dataSource: MatTableDataSource<Customer> = new MatTableDataSource<Customer>();
   @ViewChild(MatPaginator) paginator!: MatPaginator;
+  loading = true;
 
-  constructor(private http: HttpClient) { }
+  constructor(private _http: HttpClient, private _snackBar: MatSnackBar) { }
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
 
   ngOnInit() {
     this.dataSource.paginator = this.paginator;
-    this.http.get<Customer[]>('https://localhost:44393/api/customer').subscribe(
+    this._http.get<Customer[]>('https://localhost:44393/api/customer').subscribe(
       (data) => {
         this.dataSource.data = data;
         this.dataSource.paginator = this.paginator;
         this.dataSource.paginator.length = data.length;
       },
       (error) => {
-        console.error('Error al obtener datos de clientes:', error);
+        this._snackBar.open(`Error al obtener los clientes: ${error.message.toString()}`, 'Cerrar', {
+          duration: 3000
+        });
       }
-    );
+    ).add(() => {
+      this.loading = false;
+    });
   } 
-
+  
   displayedColumns: string[] = ['Name', 'Company', 'City', 'Options'];
 }

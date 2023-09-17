@@ -1,41 +1,63 @@
 <h1>Lista de Customers</h1>
 
-<div class="mat-elevation-z5 container">
+<div class="customers-container">
+  <mat-spinner class="spinner" *ngIf="loading" diameter="50"></mat-spinner>
+
+  <div class="options-container">
+    <div class="input-container">
+      <mat-label class="label">Buscar</mat-label>
+      <div class="div-input">
+        <input matInput (keyup)="applyFilter($event)" placeholder="Escribe para buscar"> 
+        <span class="material-icons">
+          search
+        </span>
+      </div>
+    </div>
+
+    <div class="add" [routerLink]="['/customers/form']">
+      <span class="material-icons">person_add</span>
+      <button class="btn btn-info">Añadir cliente</button>
+    </div> 
+  </div>  
+
+  <div *ngIf="!loading" class="mat-elevation-z5 container">
     <table mat-table [dataSource]="dataSource">
-    
-      <ng-container matColumnDef="Name">
-        <th mat-header-cell *matHeaderCellDef> Nombre y apellido </th>
-        <td mat-cell *matCellDef="let customer"> {{ customer.ContactName }} </td>
-      </ng-container>
       
-      <ng-container matColumnDef="Company">
-        <th mat-header-cell *matHeaderCellDef> Compañía </th>
-        <td mat-cell *matCellDef="let customer"> {{ customer.CompanyName }} </td>
-      </ng-container>
-      
-      <ng-container matColumnDef="City">
-        <th mat-header-cell *matHeaderCellDef> Ciudad </th>
-        <td mat-cell *matCellDef="let customer"> {{ customer.City }} </td>
-      </ng-container>
+        <ng-container matColumnDef="Name">
+          <th mat-header-cell *matHeaderCellDef> Nombre y apellido </th>
+          <td mat-cell *matCellDef="let customer"> {{ customer.ContactName }} </td>
+        </ng-container>
+        
+        <ng-container matColumnDef="Company">
+          <th mat-header-cell *matHeaderCellDef> Compañía </th>
+          <td mat-cell *matCellDef="let customer"> {{ customer.CompanyName }} </td>
+        </ng-container>
+        
+        <ng-container matColumnDef="City">
+          <th mat-header-cell *matHeaderCellDef> Ciudad </th>
+          <td mat-cell *matCellDef="let customer"> {{ customer.City }} </td>
+        </ng-container>
 
-      <ng-container matColumnDef="Options">
-        <th mat-header-cell *matHeaderCellDef> Opciones </th>
-        <td mat-cell *matCellDef="let customer">
-          <mat-icon>delete</mat-icon>
-          <mat-icon>edit</mat-icon>
-        </td>
-      </ng-container>
-    
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-    </table>
+        <ng-container matColumnDef="Options">
+          <th mat-header-cell *matHeaderCellDef> Opciones </th>
+          <td mat-cell *matCellDef="let customer">
+            <mat-icon class="icon">delete</mat-icon>
+            <mat-icon class="icon" [routerLink]="['/customers/form', customer.CustomerID]">edit</mat-icon>
+          </td>
+        </ng-container>
+      
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+  </div>
+
+  <mat-paginator
+    class="paginator"
+    [pageSizeOptions]="[5, 10, 20]"
+    showFirstLastButtons
+    aria-label="Select page of periodic elements"
+    [pageSize]="5"
+    >
+    </mat-paginator>
+
 </div>
-
-<mat-paginator
-  class="paginator"
-  [pageSizeOptions]="[5, 10, 20]"
-  showFirstLastButtons
-  aria-label="Select page of periodic elements"
-  [pageSize]="10"
->
-</mat-paginator>

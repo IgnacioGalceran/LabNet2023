@@ -1,13 +1,22 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
-import { DashboardComponent } from './dashboard.component';
 import { CustomersComponent } from './customers/customers.component';
+import { DescriptionComponent } from './description/description.component';
+import { WeatherComponent } from './weather/weather.component';
+import { ContactComponent } from './contact/contact.component';
+import { DashboardComponent } from './dashboard.component';
+import { FormComponent } from './customers/form/form.component';
 
 const routes: Routes = [
-  { path: '', component: HomeComponent },
-  { path: 'dashboard', component: DashboardComponent },
-  { path: 'customers', component: CustomersComponent }
+  { path: '', component: DashboardComponent },
+  { path: 'home', component: HomeComponent },
+  { path: 'customers', component: CustomersComponent },
+  { path: 'description', component: DescriptionComponent },
+  { path: 'weather', component: WeatherComponent },
+  { path: 'contact', component: ContactComponent },
+  { path: 'customers/form', component: FormComponent },
+  { path: 'customers/form/:id', component: FormComponent }
 ];
 
 @NgModule({

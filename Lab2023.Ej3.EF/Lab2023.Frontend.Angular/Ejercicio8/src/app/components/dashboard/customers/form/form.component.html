@@ -1,0 +1,54 @@
+<h1>Formulario para {{ title }}</h1>
+
+<div class="form-container">
+    <form [formGroup]="customerForm" class="form mat-elevation-z5">
+        <mat-form-field appearance="fill" class="input-container">
+            <mat-label>Nombre</mat-label>
+            <input matInput placeholder="Nombre y apellido" formControlName="ContactName">
+            <mat-error *ngIf="customerForm?.get('ContactName')?.hasError('required')">
+              {{ errorMessages.required }}
+            </mat-error>
+            <mat-error *ngIf="customerForm?.get('ContactName')?.hasError('maxLength')">
+              {{ errorMessages.maxLength }}
+            </mat-error>
+            <mat-error *ngIf="customerForm?.get('ContactName')?.hasError('pattern')">
+              {{ errorMessages.pattern }}
+            </mat-error>
+          </mat-form-field>
+        <mat-form-field appearance="fill" class="input-container">
+            <mat-label>Compañía</mat-label>
+            <input matInput placeholder="Compañía" formControlName="CompanyName">
+            <mat-error *ngIf="customerForm?.get('CompanyName')?.hasError('required')">
+                {{ errorMessages.required }}
+              </mat-error>
+              <mat-error *ngIf="customerForm?.get('CompanyName')?.hasError('maxLength')">
+                {{ errorMessages.maxLength }}
+              </mat-error>
+              <mat-error *ngIf="customerForm?.get('CompanyName')?.hasError('pattern')">
+                {{ errorMessages.pattern }}
+              </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="fill" class="input-container">
+            <mat-label>Ciudad</mat-label>
+            <input matInput placeholder="Ciudad" formControlName="City">
+            <mat-error *ngIf="customerForm?.get('City')?.hasError('required')">
+                {{ errorMessages.required }}
+              </mat-error>
+              <mat-error *ngIf="customerForm?.get('City')?.hasError('maxLength')">
+                {{ errorMessages.maxLength }}
+              </mat-error>
+              <mat-error *ngIf="customerForm?.get('City')?.hasError('pattern')">
+                {{ errorMessages.pattern }}
+              </mat-error>
+        </mat-form-field>
+        <div class="input-container">
+            <button 
+            type="submit" 
+            (click)="handleClick(hasId ? customerId! : '')" 
+            [disabled]="customerForm.invalid" 
+            class="btn btn-info">
+            {{title}}
+            </button>
+        </div>
+    </form>
+</div>
