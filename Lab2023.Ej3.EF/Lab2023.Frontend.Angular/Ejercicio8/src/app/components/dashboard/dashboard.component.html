@@ -1,1 +1,24 @@
-<p>dashboard works!</p>
+<main class="main-container">
+    <div class="title-container">
+        <h1>
+            Bienvenido al Dashboard 
+        </h1>
+        <span class="material-icons dashboard">dashboard</span>
+    </div>
+    <h2>Ejercicio 8</h2>
+
+    <div class="container">
+        <section [routerLink]="['/contact']" class="contact-section">
+            <p>Contacto</p>
+        </section>
+        <section [routerLink]="['/description']" class="description-section">
+            <p>Descripción del ejercicio</p>
+        </section>
+        <section [routerLink]="['/customers']" class="customers-section">
+            <p>Clientes</p>
+        </section>
+        <section [routerLink]="['/weather']" class="weather-section">
+            <p>API de Ubicacion + API de Clima</p>
+        </section>
+    </div>
+</main>

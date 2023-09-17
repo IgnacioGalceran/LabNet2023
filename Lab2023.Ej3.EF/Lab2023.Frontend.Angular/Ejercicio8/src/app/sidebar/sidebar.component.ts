@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-sidebar',
@@ -8,7 +9,13 @@ import { Component } from '@angular/core';
 export class SidebarComponent {
   sidebarOpen = true;
 
+  constructor(private router: Router) {}
+
   toggleSidebar() {
     this.sidebarOpen = !this.sidebarOpen;
+  }
+
+  homeRoute(): boolean {
+    return this.router.url === '/home' || this.router.url === '/';
   }
 }

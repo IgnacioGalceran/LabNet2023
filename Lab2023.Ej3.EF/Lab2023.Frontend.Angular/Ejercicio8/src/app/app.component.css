@@ -1,0 +1,40 @@
+.footer {
+    background-color: #191919;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+}
+  
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: left;
+}
+  
+.contact-info,
+.exercise-info {
+    width: 48%;
+}
+  
+.footer h3 {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+    color: rgb(77, 255, 169);
+}
+  
+.footer p {
+    font-size: 1.2em;
+    margin: 5px 0;
+}
+
+.footer ul {
+    list-style: disc;
+    margin-left: 20px;
+}
+
+.footer li {
+    font-size: 1.2em;
+}

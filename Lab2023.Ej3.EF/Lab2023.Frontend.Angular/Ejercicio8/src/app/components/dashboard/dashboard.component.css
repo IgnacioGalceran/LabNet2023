@@ -1,0 +1,90 @@
+h1 {
+    text-align: center;
+    font-weight: 500;
+    margin: 0;
+}
+
+h2 {
+    text-align: center;
+}
+
+p {
+    font-weight: 500;
+    font-size: 1rem;
+}
+
+.main-container {
+    min-height: 100vh;
+}
+
+.title-container {
+    display: flex;
+    justify-content: center;
+    align-self: center;
+    align-items: center;
+    padding: 20px;
+    margin: 0 auto;
+    width: 40%;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px 0;
+    margin: 10px 15px;
+    min-width: 40%;
+    max-width: 60%;
+    min-height: 200px;
+    border: 2px solid #222;
+    border-radius: 10px;
+    box-shadow: 1px 30px 20px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+}
+
+.contact-section {
+    background: #B79891;
+    background: -webkit-linear-gradient(to right, #94716B, #B79891);
+    background: linear-gradient(to right, #94716B, #B79891);
+}
+
+.contact-section:hover {
+    background: #94716B;
+}
+
+.description-section {
+    background: #3D7EAA;
+    background: -webkit-linear-gradient(to right, #FFE47A, #3D7EAA);
+    background: linear-gradient(to right, #FFE47A, #3D7EAA);
+}
+
+.description-section:hover {
+    background: #3D7EAA;
+}
+
+.customers-section {
+    background: #EB3349;
+    background: -webkit-linear-gradient(to right, #F45C43, #EB3349);
+    background: linear-gradient(to right, #F45C43, #EB3349);
+}
+
+.customers-section:hover {
+    background: #EB3349;
+}
+
+.weather-section {
+    background: #085078;
+    background: -webkit-linear-gradient(to right, #85D8CE, #085078);
+    background: linear-gradient(to right, #85D8CE, #085078);
+}
+
+.weather-section:hover {
+    background: #85D8CE;
+}
