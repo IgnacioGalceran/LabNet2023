@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Customer } from '../customers.interface';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-form',
@@ -15,7 +16,6 @@ export class FormComponent implements OnInit {
   url: string = 'https://localhost:44393/api/customer/';
   hasId: boolean = false;
   customerId: string | null = null;
-  customer: Customer | null = null;
   loading: boolean = true;
   customerForm: FormGroup;
   errorMessages = {
@@ -53,7 +53,7 @@ export class FormComponent implements OnInit {
 
       if (this.hasId && this.customerId !== null) {
         this.getCustomerData(this.customerId);
-        this.title = 'Actualizar cliente'
+        this.title = 'Actualizar cliente';
       }
     });
   }
@@ -78,36 +78,49 @@ export class FormComponent implements OnInit {
   toast(msg: string) {
     this._snackBar.open(msg, 'Cerrar', {
       duration: 2500
-    })
+    });
   }
 
   handleClick(id: string) {
-    if (id) {
-      this.updateCustomer(id);
-    } else {
-      this.insertCustomer();
-    }
+    Swal.fire({
+      title: 'Estás seguro?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: `Si, ${id ? 'actualizar' : 'agregar'}!`
+    }).then((result) => {
+      if (result.isConfirmed) {
+        if (id) {
+          this.confirmRequest(id);
+        } else {
+          this.confirmRequest();
+        }
+      }
+    })
   }
   
-  updateCustomer(id: string) {
-    console.log('update id:', id);
-    const customer = {
-      ContactName: this.customerForm.value.ContactName,
-      CompanyName: this.customerForm.value.CompanyName,
-      City: this.customerForm.value.City
+  confirmRequest(id?: string) {
+    this.loading = true;
+    let httpObservable;
+
+    if (id) {
+      httpObservable = this._http.put<any>(`${this.url}/${id}`, this.customerForm.value);
+    } else {
+      httpObservable = this._http.post<any>(this.url, this.customerForm.value);
     }
-    this._http.put<Customer>(`${this.url}/${id}`, customer).subscribe(
+
+    httpObservable.subscribe(
       (data) => {
-        console.log(data)
+          this.toast(data.message);
       },
       (error) => {
         this.toast(`Error al actualizar: ${error.message.toString()}`);
       }
-    )
+    ).add(() => {
+      this.loading = false;
+    });
   }
-  
-  insertCustomer() {
-    console.log('Insert');
-  }
+
 }
 

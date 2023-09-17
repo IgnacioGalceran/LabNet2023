@@ -1,1 +1,64 @@
-<p>weather works!</p>
+<h1>API de Ubicación + API de Clima</h1>
+
+<div class="search" (click)="restart()" *ngIf="fetchedDay && fetchedWeek && !loading">
+  <mat-icon class="replay">
+    replay
+  </mat-icon>
+  <p>Buscar otra ciudad!</p>
+</div>
+
+<mat-spinner class="spinner" *ngIf="loading" diameter="50"></mat-spinner>
+
+<div *ngIf="!fetchedDay && !fetchedWeek && !loading" class="form-container">
+    <form [formGroup]="location" class="form mat-elevation-z5">
+        <mat-form-field appearance="fill" class="input-container">
+            <mat-label>Ciudad del mundo</mat-label>
+            <input matInput placeholder="Ingrese la ciudad" formControlName="Location">
+            <mat-error *ngIf="location.get('Location')?.hasError('required')">
+              {{ errorMessages.required }}
+            </mat-error>
+            <mat-error *ngIf="location.get('Location')?.hasError('maxLength')">
+              {{ errorMessages.maxLength }}
+            </mat-error>
+            <mat-error *ngIf="location?.get('Location')?.hasError('pattern')">
+              {{ errorMessages.pattern }}
+            </mat-error>
+          </mat-form-field>
+          <div class="input-container">
+            <button 
+            type="submit" 
+            [disabled]="location.invalid"
+            (click)="handleClick()"
+            class="btn btn-info">
+            Ingresar
+            </button>
+        </div>
+    </form>
+</div>
+
+<div *ngIf="fetchedDay && fetchedWeek && !loading" class="weather-day-container">
+  <h3>Tiempo actualmente en {{ weatherDay.location.name + ', ' + weatherDay.location.region }}</h3>
+  <img width="45" height="45" src="{{ weatherDay.current.condition.icon }}">
+  <p [ngClass]="{'min': weatherDay.current.temp_c < 20, 'max': weatherDay.current.temp_c >= 20}">
+    Temperatura: {{ weatherDay.current.temp_c }} °C
+  </p>
+  <p [ngClass]="{'min': weatherDay.current.temp_c < 20, 'max': weatherDay.current.temp_c >= 20}">
+    Sensación Térmica: {{ weatherDay.current.feelslike_c }} °C
+  </p>
+  <p class="min">Precipitaciones: {{ weatherDay.current.precip_mm }} mm</p>
+  <p class="min">Humedad: {{ weatherDay.current.humidity }} %</p>
+  <p class="min">Velocidad del viento: {{ weatherDay.current.wind_kph }} km/h</p>
+</div>
+
+<div *ngIf="fetchedDay && fetchedWeek && !loading" class="week-container">
+  <div *ngFor="let w of weatherWeek; let i = index" class="weather-week-container">
+    <h4> {{ dayNames[i] }} </h4>
+    <img width="45" height="45" src="{{ w.day.condition.icon }}">
+    <p class="min">Temperatura mínima: {{ w.day.mintemp_c }} °C</p>
+    <p class="max">Temperatura máxima: {{ w.day.maxtemp_c }} °C</p>
+    <p>Humedad: {{ w.day.avghumidity }} %</p>
+    <p>Precipitaciones: {{ w.day.totalprecip_mm }} mm</p>
+  </div>
+</div>
+
+

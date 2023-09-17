@@ -3,7 +3,7 @@
 <div class="customers-container">
   <mat-spinner class="spinner" *ngIf="loading" diameter="50"></mat-spinner>
 
-  <div class="options-container">
+  <div class="options-container" *ngIf="!loading && !error">
     <div class="input-container">
       <mat-label class="label">Buscar</mat-label>
       <div class="div-input">
@@ -14,13 +14,14 @@
       </div>
     </div>
 
-    <div class="add" [routerLink]="['/customers/form']">
-      <span class="material-icons">person_add</span>
-      <button class="btn btn-info">Añadir cliente</button>
+    <div class="add" *ngIf="!loading && !error" [routerLink]="['/customers/form']">
+      <button class="btn btn-info">+ Añadir cliente</button>
     </div> 
-  </div>  
+  </div>
 
-  <div *ngIf="!loading" class="mat-elevation-z5 container">
+  <p *ngIf="error" class="error">{{error.message}}</p>
+
+  <div *ngIf="!loading && !error" class="mat-elevation-z5 container">
     <table mat-table [dataSource]="dataSource">
       
         <ng-container matColumnDef="Name">
@@ -41,7 +42,7 @@
         <ng-container matColumnDef="Options">
           <th mat-header-cell *matHeaderCellDef> Opciones </th>
           <td mat-cell *matCellDef="let customer">
-            <mat-icon class="icon">delete</mat-icon>
+            <mat-icon (click)="handleClick(customer.CustomerID)"  class="icon">delete</mat-icon>
             <mat-icon class="icon" [routerLink]="['/customers/form', customer.CustomerID]">edit</mat-icon>
           </td>
         </ng-container>
@@ -52,6 +53,7 @@
   </div>
 
   <mat-paginator
+    *ngIf="!loading && !error"
     class="paginator"
     [pageSizeOptions]="[5, 10, 20]"
     showFirstLastButtons
