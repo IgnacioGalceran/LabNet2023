@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
+import { CustomerService } from 'src/app/services/customer.service';
+import { ToastService } from 'src/app/services/toast.service';
 import { Customer } from '../customers.interface';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -25,7 +27,8 @@ export class FormComponent implements OnInit {
     pattern: 'El formato es inválido',
   };
 
-  constructor(private _route: ActivatedRoute, private _http: HttpClient, private _fb: FormBuilder, private _snackBar: MatSnackBar) {
+  constructor(private _customerService : CustomerService, private _route: ActivatedRoute, private _http: HttpClient, 
+    private _fb: FormBuilder, private _snackBar: MatSnackBar, private router: Router, private _toastService: ToastService) {
     this.customerForm = this._fb.group({
       ContactName: ['', [
         Validators.required,
@@ -68,16 +71,10 @@ export class FormComponent implements OnInit {
         });
       },
       (error) => {
-        this.toast(`Error al obtener los datos: ${error.message.toString()}`);
+        this._toastService.notification(`Error al obtener los datos: ${error.message.toString()}`, 2500);
       }
     ).add(() => {
       this.loading = false;
-    });
-  }
-
-  toast(msg: string) {
-    this._snackBar.open(msg, 'Cerrar', {
-      duration: 2500
     });
   }
 
@@ -105,22 +102,27 @@ export class FormComponent implements OnInit {
     let httpObservable;
 
     if (id) {
-      httpObservable = this._http.put<any>(`${this.url}/${id}`, this.customerForm.value);
+      httpObservable = this._customerService.updateCustomer(id, this.customerForm.value);
     } else {
-      httpObservable = this._http.post<any>(this.url, this.customerForm.value);
+      httpObservable = this._customerService.insertCustomer(this.customerForm.value);
     }
 
     httpObservable.subscribe(
       (data) => {
-          this.toast(data.message);
+          if (data.result) {
+          this._toastService.notification(`${data.message} Redirigiendo...`, 2500);
+          setTimeout(() => {
+            this.router.navigate(['/customers']);
+          }, 2500);
+        } else {
+          this._toastService.notification(data.message, 2500);
+        }
       },
       (error) => {
-        this.toast(`Error al actualizar: ${error.message.toString()}`);
+        this._toastService.notification(`Error al actualizar: ${error.message.toString()}`, 2500);
       }
     ).add(() => {
       this.loading = false;
     });
   }
-
 }
-

@@ -50,13 +50,13 @@ section {
 }
 
 .contact-section {
-    background: #B79891;
-    background: -webkit-linear-gradient(to right, #94716B, #B79891);
-    background: linear-gradient(to right, #94716B, #B79891);
+    background: #ee9ca7;
+    background: -webkit-linear-gradient(to right, #ffdde1, #ee9ca7);
+    background: linear-gradient(to right, #ffdde1, #ee9ca7);
 }
 
 .contact-section:hover {
-    background: #94716B;
+    background: #ee9ca7;
 }
 
 .description-section {
@@ -70,13 +70,13 @@ section {
 }
 
 .customers-section {
-    background: #EB3349;
-    background: -webkit-linear-gradient(to right, #F45C43, #EB3349);
-    background: linear-gradient(to right, #F45C43, #EB3349);
+    background: #649173;
+    background: -webkit-linear-gradient(to right, #DBD5A4, #649173);
+    background: linear-gradient(to right, #DBD5A4, #649173);
 }
 
 .customers-section:hover {
-    background: #EB3349;
+    background: #649173;
 }
 
 .weather-section {

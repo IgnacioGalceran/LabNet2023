@@ -2,6 +2,8 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { CustomerService } from 'src/app/services/customer.service';
+import { ToastService } from 'src/app/services/toast.service';
 import { HttpClient } from '@angular/common/http';
 import { Customer } from './customers.interface';
 import Swal from 'sweetalert2';
@@ -16,9 +18,11 @@ export class CustomersComponent implements OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   url: string = `https://localhost:44393/api/customer`;
   loading: boolean = true;
-  error = { error: false, message: ''};
+  error: boolean = false;
+  errMessage: string = '';
 
-  constructor(private _http: HttpClient, private _snackBar: MatSnackBar) { }
+  constructor(private _customerService: CustomerService, private _http: HttpClient, 
+    private _snackBar: MatSnackBar, private _toastService: ToastService) { }
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
@@ -27,24 +31,19 @@ export class CustomersComponent implements OnInit {
 
   ngOnInit() {
     this.dataSource.paginator = this.paginator;
-    this._http.get<Customer[]>(`${this.url}`).subscribe(
+    this._customerService.getCustomers().subscribe(
       (data) => {
         this.dataSource.data = data;
         this.dataSource.paginator = this.paginator;
         this.dataSource.paginator.length = data.length;
       },
       (error) => {
-        this.error = { error: true, message: `Error al obtener los clientes: ${error.message.toString()}`};
-        this.toast(`Error al obtener los clientes: ${error.message.toString()}`);
+        this.error = true;
+        this.errMessage = `Error al obtener los clientes: ${error.message.toString()}`;
+        this._toastService.notification(`Error al obtener los clientes: ${error.message.toString()}`, 2500);
       }
     ).add(() => {
       this.loading = false;
-    });
-  }
-  
-  toast(msg: string) {
-    this._snackBar.open(msg, 'Cerrar', {
-      duration: 2500
     });
   }
 
@@ -58,13 +57,13 @@ export class CustomersComponent implements OnInit {
       confirmButtonText: `Si, borrar!`
     }).then((result) => {
       if (result.isConfirmed) {
-        this._http.delete<any>(`${this.url}/${id}`).subscribe(
+        this._customerService.deleteCustomer(id).subscribe(
         (data) => {
           this.dataSource.data = this.dataSource.data.filter((deleted) => deleted.CustomerID !== id);
-          this.toast(data.message);
+          this._toastService.notification(data.message, 2500);
         },
         (error) => {
-          this.toast(`Error al borrar el cliente: ${error.message.toString()}`);
+          this._toastService.notification(`Error al borrar el cliente: ${error.message.toString()}`, 2500);
         }
         )
       }

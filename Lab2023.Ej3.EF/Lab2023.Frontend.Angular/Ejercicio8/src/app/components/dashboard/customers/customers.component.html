@@ -18,7 +18,7 @@
     </div> 
   </div>
 
-  <p *ngIf="error" class="error">{{error.message}}</p>
+  <p *ngIf="error" class="error">{{ errMessage }}</p>
 
   <div *ngIf="!loading && !error" class="mat-elevation-z5 container">
     <table mat-table [dataSource]="dataSource">
@@ -52,8 +52,8 @@
   </div>
 
   <mat-paginator
-    *ngIf="!loading && !error"
     class="paginator"
+    [hidden]="loading || error"
     [pageSizeOptions]="[5, 10, 20]"
     showFirstLastButtons
     aria-label="Select page of periodic elements"

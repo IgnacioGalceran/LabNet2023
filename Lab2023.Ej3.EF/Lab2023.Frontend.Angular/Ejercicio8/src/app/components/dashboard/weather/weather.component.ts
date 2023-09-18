@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { WeatherService } from 'src/app/services/weather.service';
+import { ToastService } from 'src/app/services/toast.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
@@ -25,7 +27,8 @@ export class WeatherComponent {
     pattern: 'El formato es inválido',
   };
 
-  constructor(private _http: HttpClient,  private _fb: FormBuilder, private _snackBar: MatSnackBar) {
+  constructor(private _http: HttpClient,  private _fb: FormBuilder, private _snackBar: MatSnackBar, 
+    private _wheatherService: WeatherService, private _toastService: ToastService) {
     this.location = this._fb.group({
       Location: ['', [
         Validators.required,
@@ -38,24 +41,21 @@ export class WeatherComponent {
 
   handleClick() {
     this.loading = true;
-    this._http.get<[]>(`${this.urlNominatim}?addressdetails=1&q=${this.location.value.Location}&format=jsonv2&limit=1`).subscribe(
+    this._wheatherService.getCity(this.location.value.Location).subscribe(
       (data: any[]) => {
         if (data && data.length > 0) {
           const latitud = data[0].lat;
           const longitud = data[0].lon;
-          const urlToday = `https://api.weatherapi.com/v1/current.json?key=${this.API_KEY}&q=${latitud},${longitud}`
-          const urlWeek = `https://api.weatherapi.com/v1/forecast.json?key=${this.API_KEY}&q=${latitud},${longitud}&days=8`;
-            this._http.get<any>(`${urlToday}`).subscribe(
+            this._wheatherService.getWeatherToday(latitud, longitud).subscribe(
               (data) => {     
                 this.weatherDay = data;
                 this.fetchedDay = true;
               },
               (error) => {
-                this.toast(error.toString());
+                this._toastService.notification(error.toString(), 2500);
               }
             );
-
-            this._http.get<any>(urlWeek).subscribe(
+            this._wheatherService.getWeatherWeek(latitud, longitud).subscribe(
               (data) => {
                 this.weatherWeek = data.forecast.forecastday.slice(1);
                 this.weatherWeek.forEach((d, index) => {
@@ -67,7 +67,7 @@ export class WeatherComponent {
                 this.fetchedWeek = true;
               },
               (error) => {
-                this.toast(error.toString());
+                this._toastService.notification(error.toString(), 2500);
               }
             ).add(() => {
               this.loading = false;
@@ -75,7 +75,7 @@ export class WeatherComponent {
         }
       },
       (error) => {
-        this.toast(error.toString());
+        this._toastService.notification(error.toString(), 2500);
       }
     )
   }
@@ -83,12 +83,7 @@ export class WeatherComponent {
   restart() {
     this.fetchedDay = false;
     this.fetchedWeek = false;
-  }
-
-  toast(msg: string) {
-    this._snackBar.open(msg, 'Cerrar', {
-      duration: 2500
-    });
+    this.location.reset();
   }
 
 }
