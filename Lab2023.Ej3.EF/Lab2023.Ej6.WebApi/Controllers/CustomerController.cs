@@ -76,7 +76,7 @@ namespace Lab2023.Ej6.WebApi.Controllers
                 {
                     object response = new { message = "No se produjeron cambios en el customer", result = false, error = false };
 
-                    return Content(HttpStatusCode.NoContent, response);
+                    return Content(HttpStatusCode.OK, response);
                 }
             }
             catch (Exception ex)

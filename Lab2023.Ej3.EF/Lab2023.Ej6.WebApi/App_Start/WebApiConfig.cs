@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web.Http;
+﻿using System.Web.Http;
+using System.Web.Http.Cors;
 
 namespace Lab2023.Ej6.WebApi
 {
@@ -19,6 +17,10 @@ namespace Lab2023.Ej6.WebApi
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
+
+            // Habilitando CORS
+            var cors = new EnableCorsAttribute("http://localhost:4500", "*", "*");
+            config.EnableCors(cors);
         }
     }
 }
