@@ -1,4 +1,4 @@
-<div class="customers-container">
+<div class="{{!isDarkMode? 'customers-container' : 'customers-darkContainer'}}">
   <h1>Lista de Customers</h1>
   <mat-spinner class="spinner" *ngIf="loading" diameter="50"></mat-spinner>
 
@@ -20,7 +20,7 @@
 
   <p *ngIf="error" class="error">{{ errMessage }}</p>
 
-  <div *ngIf="!loading && !error" class="mat-elevation-z5 container">
+  <div *ngIf="!loading && !error" class="mat-elevation-z5 table-container">
     <table mat-table [dataSource]="dataSource">
       
         <ng-container matColumnDef="Name">

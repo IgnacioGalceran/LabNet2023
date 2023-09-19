@@ -1,4 +1,4 @@
-<main class="container">
+<main class="{{!isDarkMode? 'weather-container' : 'weather-darkContainer'}}">
   <h1>API de Ubicación + API de Clima</h1>
 
   <div class="search" (click)="restart()" *ngIf="fetchedDay && fetchedWeek && !loading">

@@ -1,12 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { CustomerService } from 'src/app/services/customer.service';
 import { ToastService } from 'src/app/services/toast.service';
-import { HttpClient } from '@angular/common/http';
 import { Customer } from './customers.interface';
 import Swal from 'sweetalert2';
+import { DarkmodeService } from 'src/app/services/darkmode.service';
 
 @Component({
   selector: 'app-customers',
@@ -16,13 +15,20 @@ import Swal from 'sweetalert2';
 export class CustomersComponent implements OnInit {
   dataSource: MatTableDataSource<Customer> = new MatTableDataSource<Customer>();
   @ViewChild(MatPaginator) paginator!: MatPaginator;
-  url: string = `https://localhost:44393/api/customer`;
+  isDarkMode: boolean = false;
   loading: boolean = true;
   error: boolean = false;
   errMessage: string = '';
 
-  constructor(private _customerService: CustomerService, private _http: HttpClient, 
-    private _snackBar: MatSnackBar, private _toastService: ToastService) { }
+  constructor(
+    private _customerService: CustomerService, 
+    private _toastService: ToastService, 
+    private _darkmode: DarkmodeService
+    ) {
+    this._darkmode.darkmode.subscribe((darkmode) => {
+      this.isDarkMode = darkmode;
+    });
+    }
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;

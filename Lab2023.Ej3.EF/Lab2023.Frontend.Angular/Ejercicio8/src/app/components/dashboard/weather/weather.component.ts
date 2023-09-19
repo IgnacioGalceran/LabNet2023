@@ -1,9 +1,8 @@
 import { Component } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { WeatherService } from 'src/app/services/weather.service';
 import { ToastService } from 'src/app/services/toast.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { DarkmodeService } from 'src/app/services/darkmode.service';
 
 @Component({
   selector: 'app-weather',
@@ -14,6 +13,7 @@ export class WeatherComponent {
   API_KEY: string = 'b4f008b21480401b9dd124341231309';
   urlNominatim: string = 'https://nominatim.openstreetmap.org/search';
   loading: boolean = false;
+  isDarkMode: boolean = false;
   fetchedDay: boolean = false;
   fetchedWeek: boolean = false;
   dayNames: Array<any> = [];
@@ -27,8 +27,17 @@ export class WeatherComponent {
     pattern: 'El formato es inválido',
   };
 
-  constructor(private _http: HttpClient,  private _fb: FormBuilder, private _snackBar: MatSnackBar, 
-    private _wheatherService: WeatherService, private _toastService: ToastService) {
+  constructor(
+    private _fb: FormBuilder, 
+    private _wheatherService: WeatherService, 
+    private _toastService: ToastService,
+    private _darkmode: DarkmodeService
+    ) {
+
+    this._darkmode.darkmode.subscribe((darkmode) => {
+      this.isDarkMode = darkmode;
+    }); 
+
     this.location = this._fb.group({
       Location: ['', [
         Validators.required,

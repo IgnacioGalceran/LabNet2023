@@ -1,3 +1,54 @@
+.contact-container {
+    transition: background-color 1s;
+    background-color: #ECE9E6;
+    min-height: 100vh;
+}
+
+.contact-darkContainer {
+    transition: background-color 1s;
+    background-color: rgb(23, 25, 27);
+    min-height: 100vh;
+}
+
+.contact-darkContainer h1, 
+.contact-darkContainer h2,
+.contact-darkContainer p,
+.contact-darkContainer label {
+    transition: color 1s;
+    color: #fff;
+}
+
+.contact-darkContainer .div-container {
+    transition: background-color 1s;
+    background-color: rgb(23, 25, 27);
+    box-shadow: 0 0 5px 5px rgba(141, 141, 141, 0.2);
+}
+
+.contact-container .div-container {
+    transition: background-color 1s;
+    background-color: #ECE9E6;
+    box-shadow: 0 0 10px 10px rgba(0, 0, 0, 0.2);
+}
+
+.contact-darkContainer input, 
+.contact-darkContainer textarea {
+    transition: background-color 1s;
+    background-color: rgb(196, 198, 201);
+}
+
+.contact-container input,
+.contact-container textarea {
+    transition: color 1s;
+    color: #fff;
+}
+
+.contact-darkContainer button {
+    transition: background-color 1s;
+    background-color: #ECE9E6;
+    transition: color 1s;
+    color: #000;
+}
+
 h1 {
     margin: 0;
     padding: 20px;
@@ -6,11 +57,12 @@ h1 {
     text-align: center;
 }
 
-main {
+.div-container {
     max-width: 800px;
     margin: 0 auto 10px auto;
     padding: 20px;
     background-color: #fff;
+    border: 1px solid #5e5959;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
@@ -33,7 +85,7 @@ form {
 }
 
 label {
-    font-weight: bold;
+    font-weight: 500;
 }
 
 input[type="text"],
@@ -47,8 +99,11 @@ textarea {
 }
 
 button {
+    transition: background-color 1s;
     background-color: #333;
+    transition: color 1s;
     color: #fff;
+    font-weight: 500;
     padding: 10px 20px;
     border: none;
     border-radius: 5px;

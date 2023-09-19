@@ -1,11 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
 import { CustomerService } from 'src/app/services/customer.service';
 import { ToastService } from 'src/app/services/toast.service';
-import { Customer } from '../customers.interface';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { DarkmodeService } from 'src/app/services/darkmode.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -19,30 +17,58 @@ export class FormComponent implements OnInit {
   hasId: boolean = false;
   customerId: string | null = null;
   loading: boolean = true;
+  isDarkMode: boolean = false;
   customerForm: FormGroup;
   errorMessages = {
-    required: 'Este campo es obligatorio',
-    minLength: 'Mínimo 1 caracter',
-    maxLength: 'Máximo 30 caracteres',
-    pattern: 'El formato es inválido',
+    ContactName: {
+      required: 'Este campo es obligatorio',
+      minLength: 'Mínimo 2 caracteres',
+      maxLength: 'Se superó el máximo de 40 caracteres',
+      pattern: 'El nombre debe contener al menos un espacio en el medio. Sólo letras y espacios',
+    },
+    CompanyName: {
+      required: 'Este campo es obligatorio',
+      minLength: 'Mínimo 2 caracteres',
+      maxLength: 'Se superó el máximo de 30 caracteres',
+      pattern: 'El formato es inválido. Sólo letras y espacios',
+    },
+    City: {
+      required: 'Este campo es obligatorio',
+      minLength: 'Mínimo 2 caracteres',
+      maxLength: 'Se superó el máximo de 30 caracteres',
+      pattern: 'El formato es inválido. Sólo letras y espacios',
+    },
   };
 
-  constructor(private _customerService : CustomerService, private _route: ActivatedRoute, private _http: HttpClient, 
-    private _fb: FormBuilder, private _snackBar: MatSnackBar, private router: Router, private _toastService: ToastService) {
+  constructor(
+    private _customerService: CustomerService,
+    private _route: ActivatedRoute,
+    private _fb: FormBuilder,
+    private router: Router,
+    private _toastService: ToastService,
+    private _darkmode: DarkmodeService
+  ) {
+    this._darkmode.darkmode.subscribe((darkmode) => {
+      this.isDarkMode = darkmode;
+    });
+    
     this.customerForm = this._fb.group({
       ContactName: ['', [
         Validators.required,
-        Validators.maxLength(30),
-        Validators.pattern(/^[a-zA-ZáéíóúÁÉÍÓÚñÑ.\s-_]+$/)
+        Validators.minLength(2),
+        Validators.maxLength(40),
+        Validators.pattern(/^[\wáéíóúÁÉÍÓÚñÑ]+(?:\s+[\wáéíóúÁÉÍÓÚñÑ]+)+$/)
       ]],
       CompanyName: ['', [
         Validators.required,
+        Validators.minLength(2),
         Validators.maxLength(30),
         Validators.pattern(/^[a-zA-ZáéíóúÁÉÍÓÚñÑ.\s-_]+$/)
       ]],
       City: ['', [
         Validators.required,
-        Validators.maxLength(15),
+        Validators.minLength(2),
+        Validators.maxLength(30),
         Validators.pattern(/^[a-zA-ZáéíóúÁÉÍÓÚñÑ.\s-_]+$/)
       ]]
     });
@@ -62,7 +88,7 @@ export class FormComponent implements OnInit {
   }
 
   getCustomerData(id: string) {
-    this._http.get<Customer>(`${this.url}/${id}`).subscribe(
+    this._customerService.getCustomerById(id).subscribe(
       (data) => {
         this.customerForm.setValue({
           ContactName: data.ContactName,

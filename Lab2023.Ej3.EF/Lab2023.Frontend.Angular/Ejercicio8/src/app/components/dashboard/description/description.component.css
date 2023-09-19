@@ -5,10 +5,6 @@ h1 {
     padding: 20px;
 }
 
-.container {
-    min-height: 100vh;
-}
-
 .description {
     max-width: 800px;
     margin: 0 auto;
@@ -34,4 +30,26 @@ h1 {
   
 .description li {
     font-size: 1.2em;
+}
+
+.main-container {
+    transition: background-color 1s;
+    background-color: #ECE9E6;
+    min-height: 100vh;
+}
+
+.main-darkContainer {
+    transition: background-color 1s;
+    background-color: rgb(23, 25, 27);
+    min-height: 100vh;
+}
+
+.main-container h1, .main-container h2, .main-container p, .main-container li {
+    transition: color 1s;
+    color: #333;
+}
+
+.main-darkContainer h1, .main-darkContainer h2, .main-darkContainer p, .main-darkContainer li {
+    transition: color 1s;
+    color: aliceblue;
 }

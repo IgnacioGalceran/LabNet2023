@@ -1,7 +1,13 @@
 <aside [ngClass]="{'inactive': sidebarOpen}" class="sidebar">
     <nav>
+      <span (click)="toggleSidebar()" class="material-icons hamburger">menu</span>
+      <div class="toggle-container">
+        <span class="material-icons light">light_mode</span>
+        <span class="material-icons toggle-off" *ngIf="!isDarkMode" (click)="toggleDarkmode()">toggle_off</span>
+        <span class="material-icons toggle-on" *ngIf="isDarkMode" (click)="toggleDarkmode()">toggle_on</span>
+        <span class="material-icons dark">dark_mode</span>
+      </div>
       <ul>
-        <span (click)="toggleSidebar()" class="material-icons hamburger">menu</span>
         <li>
           <a [routerLink]="['/home']" [class.active]="homeRoute()">
             <span *ngIf="sidebarOpen" class="material-icons">dashboard</span>
@@ -34,4 +40,4 @@
         </li>
       </ul>
     </nav>
-  </aside>
+</aside>

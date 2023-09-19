@@ -1,19 +1,19 @@
-<main class="container">
+<main class="{{!isDarkMode ? 'main-container' : 'main-darkContainer'}}">
     <h1>Aplicación Angular</h1>
     <div class="description">
         <h2>Descripción del Ejercicio 8</h2>
-        <p>Este ejercicio consiste en la creación de una aplicación frontend en Angular, la cual interactúa con tres APIs diferentes:</p>
+        <p>Este ejercicio consiste en la creación de una aplicación SPA (Single Page Aplication) frontend usando Angular, la cual interactúa con tres diferentes API's:</p>
         <ul>
-          <li>Una API creada en C# con .NET Framework (Web API), que proporciona datos personalizados y específicos de la aplicación. Esta API se utiliza para obtener y manipular datos de clientes.</li>
+          <li>Una API creada por mi en C# con .NET Framework (Proyecto Web API), que proporciona y manipula datos de la entidad 'Customer' de la base de datos Northwind de Microsoft.</li>
           <li>Una API pública 'https://nominatim.openstreetmap.org', que se utiliza para
             localizar ciudades en base a su nombre o zona geográfica.</li>
           <li>Una API pública '`https://api.weatherapi.com' que ofrece información meteorológica detallada basada en la localización proporcionada por la API anterior.
-            Esta API no es gratis, tiene un plan free de 14 dias, por lo que el 29 de Septiembre este servicio quedará en desuso.
+            Esta API no es gratis, tiene un plan free de 14 dias, por lo que el 27 de Septiembre este servicio quedará en 
+            desuso (habría que crearse otra cuenta en la misma plataforma y generar otra KEY).
           </li>
         </ul>
         <p>La aplicación Angular se encarga de solicitar datos a estas APIs, mostrar la información al usuario y ofrecer una experiencia de usuario fluida y amigable.</p>
         <p>La API de C# permite realizar operaciones de alta, baja y modificación (ABM) en datos de clientes, lo que proporciona funcionalidad básica de administración de clientes</p>
-        <p>Este ejercicio combina la creación de componentes frontend con la integración de servicios web externos y la administración de datos de clientes.</p>
-        <p>¡Gracias por visitar esta página y explorar el ejercicio!</p>
+        <p>Este ejercicio combina la creación de componentes frontend con la integración de servicios web externos y la administración de diferentes datos.</p>
       </div>
 </main>

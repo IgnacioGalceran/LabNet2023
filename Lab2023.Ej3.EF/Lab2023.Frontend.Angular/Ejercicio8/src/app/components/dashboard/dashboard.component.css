@@ -13,8 +13,26 @@ p {
     font-size: 1rem;
 }
 
-.main-container {
+.main-container, .main-darkContainer {
+    align-items: center;
     min-height: 100vh;
+}
+
+.main-container {
+    transition: background-color 1s;
+    background-color: #ECE9E6;
+}
+
+.main-darkContainer {
+    transition: background-color 1s;
+    background-color: rgb(23, 25, 27);
+}
+
+.main-darkContainer h1,
+.main-darkContainer h2,
+.main-darkContainer span {
+    transition: color 1s;
+    color: #fff;
 }
 
 .title-container {
@@ -32,6 +50,7 @@ p {
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
+    margin: 8% auto;
 }
 
 section {
@@ -47,6 +66,11 @@ section {
     border-radius: 10px;
     box-shadow: 1px 30px 20px rgba(0, 0, 0, 0.2);
     cursor: pointer;
+}
+
+.main-darkContainer section {
+    border: 2px solid #ffffff;
+    box-shadow: 0 0 10px 10px rgba(173, 173, 173, 0.2);
 }
 
 .contact-section {
@@ -70,13 +94,13 @@ section {
 }
 
 .customers-section {
-    background: #649173;
-    background: -webkit-linear-gradient(to right, #DBD5A4, #649173);
-    background: linear-gradient(to right, #DBD5A4, #649173);
+    background: #A1FFCE;
+    background: -webkit-linear-gradient(to right, #FAFFD1, #A1FFCE);
+    background: linear-gradient(to right, #FAFFD1, #A1FFCE);
 }
 
 .customers-section:hover {
-    background: #649173;
+    background: #A1FFCE;
 }
 
 .weather-section {

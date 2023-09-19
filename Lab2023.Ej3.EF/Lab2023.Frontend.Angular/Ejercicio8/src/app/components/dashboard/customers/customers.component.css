@@ -1,5 +1,5 @@
 @media only screen and (min-width: 300px) {
-    .container {
+    .table-container {
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -25,7 +25,7 @@
 }
 
 @media only screen and (min-width: 600px) {
-    .container {
+    .table-container {
         width: 60%;
         max-height: 60vh;
         margin: 15px auto;
@@ -54,6 +54,10 @@
     border-bottom: 2px solid #2d2d2d;
 }
 
+.customers-darkContainer input {
+    color: #fff;
+}
+
 .input-container .label {
     font-weight: 500;
 }
@@ -67,10 +71,57 @@
     outline: none;
 }
 
-.customers-container {
+.customers-darkContainer .div-input {
+    border-bottom: 2px solid #8a8a8a;
+}
+
+.customers-container, .customers-darkContainer {
     display: flex;
     flex-direction: column;
-    height: 100vh;
+}
+
+.customers-container {
+    transition: background-color 1s;
+    background-color: #ECE9E6;
+    min-height: 100vh;
+}
+
+.customers-darkContainer {
+    transition: background-color 1s;
+    background-color: rgb(23, 25, 27);
+    min-height: 100vh;
+}
+
+.customers-darkContainer table td, 
+.customers-darkContainer table th {
+    transition: background-color 1s;
+    background-color: rgb(23, 25, 27);
+    transition: color 1s;
+    color: #fff;
+}
+
+.customers-darkContainer h1 {
+    transition: color 1s;
+    color: #fff;
+}
+
+.customers-container table td, 
+.customers-container table th {
+    transition: background-color 1s;
+    background-color: #ECE9E6;
+    transition: color 1s;
+    color: #000;
+}
+
+.customers-darkContainer .label, 
+.customers-darkContainer span {
+    transition: color 1s;
+    color: #fff;
+}
+
+.customers-darkContainer .table-container {
+    border: 1px solid #5c5c5c;
+    box-shadow: 0 0 3px 3px rgba(116, 116, 116, 0.2);
 }
 
 h1 {
@@ -131,4 +182,17 @@ table th {
     align-items: center;
     width: 150px;
     cursor: pointer;
+}
+
+.customers-darkContainer .paginator {
+    background-color: #57b9a1;
+    box-shadow: 0px 0px 5px rgba(255, 255, 255, 0.5);
+}
+
+.paginator {
+    width: fit-content;
+    margin: 20px auto;
+    border-radius: 10px;
+    font-weight: 500;
+    box-shadow: 0 0 6px 6px rgba(0, 0, 0, 0.2);
 }
