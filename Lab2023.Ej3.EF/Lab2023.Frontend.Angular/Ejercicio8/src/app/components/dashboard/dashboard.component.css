@@ -69,8 +69,19 @@ section {
 }
 
 .main-darkContainer section {
-    border: 2px solid #ffffff;
-    box-shadow: 0 0 10px 10px rgba(173, 173, 173, 0.2);
+    border: 1px solid #707070;
+    box-shadow: 0 0 2px 2px rgba(173, 173, 173, 0.486);
+}
+
+.main-darkContainer .contact-section {
+    background: #B79891;
+    background: -webkit-linear-gradient(to right, #94716B, #B79891);
+    background: linear-gradient(to right, #94716B, #B79891);
+    color: #fff;
+}
+
+.main-darkContainer .contact-section:hover {
+    background: #94716B;
 }
 
 .contact-section {
@@ -83,6 +94,17 @@ section {
     background: #ee9ca7;
 }
 
+.main-darkContainer .description-section {
+    background: #1F1C2C;
+    background: -webkit-linear-gradient(to bottom, #928DAB, #1F1C2C);
+    background: linear-gradient(to bottom, #928DAB, #1F1C2C);
+    color: #fff;
+}
+
+.main-darkContainer .description-section:hover {
+    background: #1F1C2C;
+}
+
 .description-section {
     background: #3D7EAA;
     background: -webkit-linear-gradient(to right, #FFE47A, #3D7EAA);
@@ -93,6 +115,17 @@ section {
     background: #3D7EAA;
 }
 
+.main-darkContainer .customers-section {
+    background: #16222A;
+    background: -webkit-linear-gradient(to right, #3A6073, #16222A);
+    background: linear-gradient(to right, #3A6073, #16222A);
+    color: #fff;
+}
+
+.main-darkContainer .customers-section:hover {
+    background: #16222A;
+}
+
 .customers-section {
     background: #A1FFCE;
     background: -webkit-linear-gradient(to right, #FAFFD1, #A1FFCE);
@@ -101,6 +134,17 @@ section {
 
 .customers-section:hover {
     background: #A1FFCE;
+}
+
+.main-darkContainer .weather-section {
+    background: #232526;
+    background: -webkit-linear-gradient(to right, #414345, #232526);
+    background: linear-gradient(to right, #414345, #232526);
+    color: #fff;
+}
+
+.main-darkContainer .weather-section:hover {
+    background: #232526;
 }
 
 .weather-section {

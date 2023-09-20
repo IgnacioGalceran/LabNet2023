@@ -17,6 +17,11 @@ export class SidebarComponent {
     });
   }
 
+  toggleDiv() {
+    const toggleContainer = document.getElementById('toggle-container');
+    toggleContainer?.classList.toggle('visible');
+  }
+
   toggleSidebar() {
     this.sidebarOpen = !this.sidebarOpen;
   }

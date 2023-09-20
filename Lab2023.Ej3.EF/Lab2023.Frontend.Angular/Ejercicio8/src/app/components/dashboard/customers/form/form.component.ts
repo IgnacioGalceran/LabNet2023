@@ -13,7 +13,6 @@ import Swal from 'sweetalert2';
 })
 export class FormComponent implements OnInit {
   title: string = 'Agregar cliente';
-  url: string = 'https://localhost:44393/api/customer/';
   hasId: boolean = false;
   customerId: string | null = null;
   loading: boolean = true;
@@ -145,7 +144,7 @@ export class FormComponent implements OnInit {
         }
       },
       (error) => {
-        this._toastService.notification(`Error al actualizar: ${error.message.toString()}`, 2500);
+        this._toastService.notification(`Error al ${id ? 'actualizar' : 'agregar'}: ${error.message.toString()}`, 2500);
       }
     ).add(() => {
       this.loading = false;

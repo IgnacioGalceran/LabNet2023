@@ -3,7 +3,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { CustomerService } from 'src/app/services/customer.service';
 import { ToastService } from 'src/app/services/toast.service';
-import { Customer } from './customers.interface';
+import { Customer } from '../../../models/customers.interface';
 import Swal from 'sweetalert2';
 import { DarkmodeService } from 'src/app/services/darkmode.service';
 

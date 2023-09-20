@@ -1,14 +1,16 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { env } from 'src/environment/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class WeatherService {
-  urlNominatim: string = 'https://nominatim.openstreetmap.org/search';
-  API_KEY: string = 'b4f008b21480401b9dd124341231309';
-  urlWeather: string = 'https://api.weatherapi.com/v1';
+  urlNominatim: string = env.NOMINATIM_URL;
+  urlWeather: string = env.WEATHER_URL;
+  API_KEY: string = env.WEATHER_KEY;
+  
   constructor(private _http: HttpClient) {}
 
   getCity(location: string): Observable<any> {

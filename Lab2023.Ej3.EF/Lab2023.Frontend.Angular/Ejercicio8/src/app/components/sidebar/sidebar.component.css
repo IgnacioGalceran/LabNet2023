@@ -19,11 +19,22 @@
         color: #fff;
         cursor: pointer;
     }
-
+    
     .toggle-container {
+        opacity: 0;
         display: flex;
         justify-content: center;
-        margin-top: 60px;
+        align-items: center;
+        transition: opacity 0.3s ease;
+        pointer-events: none;
+    }
+      
+    .visible {
+        opacity: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        pointer-events: auto;
     }
 
     .toggle-off, .toggle-on {

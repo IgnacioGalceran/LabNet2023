@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Customer } from '../components/dashboard/customers/customers.interface';
+import { Customer } from '../models/customers.interface';
+import { env } from 'src/environment/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CustomerService {
-  private _apiUrl = 'https://localhost:44393/api/customer';
+  private _apiUrl = env.API_URL;
 
   constructor(private _http: HttpClient) {}
 
@@ -30,5 +31,4 @@ export class CustomerService {
   deleteCustomer(id: string): Observable<any> {
     return this._http.delete<any>(`${this._apiUrl}/${id}`);
   }
-
 }
