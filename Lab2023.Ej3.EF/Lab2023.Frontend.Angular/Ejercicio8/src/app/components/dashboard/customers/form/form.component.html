@@ -53,9 +53,9 @@
             <button 
             type="submit" 
             (click)="handleClick(hasId ? customerId! : '')" 
-            [disabled]="customerForm.invalid" 
+            [disabled]="customerForm.invalid"
             class="btn btn-info">
-            {{title}}
+            {{!getError ? title : 'Error'}}
             </button>
             <button type="button" class="btn btn-danger back" [routerLink]="['/customers']">
               Volver

@@ -14,6 +14,7 @@ import Swal from 'sweetalert2';
 export class FormComponent implements OnInit {
   title: string = 'Agregar cliente';
   hasId: boolean = false;
+  getError: boolean = false;
   customerId: string | null = null;
   loading: boolean = true;
   isDarkMode: boolean = false;
@@ -28,7 +29,7 @@ export class FormComponent implements OnInit {
     CompanyName: {
       required: 'Este campo es obligatorio',
       minLength: 'Mínimo 2 caracteres',
-      maxLength: 'Se superó el máximo de 30 caracteres',
+      maxLength: 'Se superó el máximo de 40 caracteres',
       pattern: 'El formato es inválido. Sólo letras y espacios',
     },
     City: {
@@ -61,7 +62,7 @@ export class FormComponent implements OnInit {
       CompanyName: ['', [
         Validators.required,
         Validators.minLength(2),
-        Validators.maxLength(30),
+        Validators.maxLength(40),
         Validators.pattern(/^[a-zA-ZáéíóúÁÉÍÓÚñÑ.\s-_]+$/)
       ]],
       City: ['', [
@@ -96,6 +97,7 @@ export class FormComponent implements OnInit {
         });
       },
       (error) => {
+        this.getError = true;
         this._toastService.notification(`Error al obtener los datos: ${error.message.toString()}`, 2500);
       }
     ).add(() => {

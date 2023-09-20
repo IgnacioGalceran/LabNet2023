@@ -8,7 +8,20 @@ body {
     margin: 0;
 }
 
-.mat-mdc-paginator-container {
-    justify-content: center !important;
+::-webkit-scrollbar {
+    width: 10px;
+}
+ 
+::-webkit-scrollbar-track {
+    background-color: #d8d8d8;
+}
+  
+::-webkit-scrollbar-thumb {
+    background-color: #2a2e31;
+    border-radius: 5px;
+}
+  
+::-webkit-scrollbar-thumb:hover {
+    background-color: #606266;
 }
 
